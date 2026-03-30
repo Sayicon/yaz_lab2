@@ -5,6 +5,24 @@ spring:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service
+          uri: ${AUTH_SERVICE_URL:http://auth-service:8081}
+          predicates:
+            - Path=/auth/**
+        - id: user-service
+          uri: ${USER_SERVICE_URL:http://user-service:8082}
+          predicates:
+            - Path=/users/**
+        - id: product-service
+          uri: ${PRODUCT_SERVICE_URL:http://product-service:8083}
+          predicates:
+            - Path=/products/**
+
+jwt:
+  secret: ${JWT_SECRET:yazlab2-super-secret-key-change-in-prod-256bit}
 
 management:
   endpoints:
