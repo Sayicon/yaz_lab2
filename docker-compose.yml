@@ -1,0 +1,193 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# YazLab II — Mikroservis Sistemi
+#
+# Network mimarisi:
+#   • internal  : Servisler arası iletişim (dışa kapalı)
+#   • frontend  : Dispatcher ↔ Dış dünya
+#
+# Sadece dispatcher 'frontend' ağına da bağlıdır; diğer servisler yalnızca
+# 'internal' ağındadır. Host'tan sadece Dispatcher (8080), Grafana (3000)
+# ve Prometheus (9090) erişilebilir.
+# ─────────────────────────────────────────────────────────────────────────────
+
+networks:
+  internal:
+    driver: bridge
+    internal: true          # dışa kapalı — mikroservisler birbirini görür
+  frontend:
+    driver: bridge          # dispatcher + monitoring dışa açık
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Infrastructure
+# ─────────────────────────────────────────────────────────────────────────────
+services:
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: yazlab-redis
+    command: ["redis-server", "--save", "60", "1"]
+    expose:
+      - "6379"
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-auth:
+    image: mongo:7.0
+    container_name: yazlab-mongo-auth
+    expose:
+      - "27017"
+    networks:
+      - internal
+    volumes:
+      - mongo-auth-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: authdb
+
+  mongo-user:
+    image: mongo:7.0
+    container_name: yazlab-mongo-user
+    expose:
+      - "27017"
+    networks:
+      - internal
+    volumes:
+      - mongo-user-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: userdb
+
+  mongo-product:
+    image: mongo:7.0
+    container_name: yazlab-mongo-product
+    expose:
+      - "27017"
+    networks:
+      - internal
+    volumes:
+      - mongo-product-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: productdb
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Microservices (internal only)
+# ─────────────────────────────────────────────────────────────────────────────
+
+  auth-service:
+    build: ./auth-service
+    container_name: yazlab-auth
+    expose:
+      - "8081"
+    networks:
+      - internal
+    environment:
+      MONGO_URI: mongodb://mongo-auth:27017/authdb
+      JWT_SECRET: ${JWT_SECRET:-yazlab2-super-secret-key-change-in-prod-256bit}
+    depends_on:
+      mongo-auth:
+        condition: service_started
+
+  user-service:
+    build: ./user-service
+    container_name: yazlab-user
+    expose:
+      - "8082"
+    networks:
+      - internal
+    environment:
+      MONGO_URI: mongodb://mongo-user:27017/userdb
+    depends_on:
+      mongo-user:
+        condition: service_started
+
+  product-service:
+    build: ./product-service
+    container_name: yazlab-product
+    expose:
+      - "8083"
+    networks:
+      - internal
+    environment:
+      MONGO_URI: mongodb://mongo-product:27017/productdb
+    depends_on:
+      mongo-product:
+        condition: service_started
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Dispatcher (API Gateway) — dışa açık tek servis
+# ─────────────────────────────────────────────────────────────────────────────
+
+  dispatcher:
+    build: ./dispatcher
+    container_name: yazlab-dispatcher
+    ports:
+      - "8080:8080"           # dışa açık
+    networks:
+      - internal
+      - frontend
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET:-yazlab2-super-secret-key-change-in-prod-256bit}
+      AUTH_SERVICE_URL: http://auth-service:8081
+      USER_SERVICE_URL: http://user-service:8082
+      PRODUCT_SERVICE_URL: http://product-service:8083
+    depends_on:
+      redis:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      user-service:
+        condition: service_started
+      product-service:
+        condition: service_started
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Monitoring
+# ─────────────────────────────────────────────────────────────────────────────
+
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    container_name: yazlab-prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - internal
+      - frontend
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=7d"
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: yazlab-grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - internal
+      - frontend
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Volumes
+# ─────────────────────────────────────────────────────────────────────────────
+volumes:
+  mongo-auth-data:
+  mongo-user-data:
+  mongo-product-data:
+  grafana-data:
