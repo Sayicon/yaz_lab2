@@ -22,16 +22,16 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 
 | Bileşen | Teknoloji |
 |---|---|
-| Dispatcher | Python · FastAPI |
-| Auth/Login Service | Python · FastAPI · PyJWT |
-| User / Product / Order Service | Java · Spring Boot |
+| Dispatcher | Java · Spring Boot · Spring Cloud Gateway |
+| Auth/Login Service | Java · Spring Boot · Spring Security · JJWT |
+| User / Product / Order Service | Java · Spring Boot · Maven |
 | Dispatcher DB | Redis |
 | Mikroservis DB'leri | MongoDB (her servis izole, ayrı DB) |
 | UI / Dashboard | HTML + Grafana embed |
 | Container | Docker + docker-compose |
-| Monitoring | Prometheus + Grafana |
+| Monitoring | Prometheus + Grafana (Micrometer) |
 | Yük Testi | k6 |
-| Test Framework | pytest (Python) · JUnit 5 (Java) |
+| Test Framework | JUnit 5 · Mockito · Spring Boot Test (tüm servisler) |
 
 ---
 
@@ -39,7 +39,7 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 
 - **RMM Seviye 2** zorunlu: kaynak bazlı URI'ler (`/users/{id}`), doğru HTTP metodları (GET/POST/PUT/DELETE), doğru HTTP status kodları.
 - **TDD zorunlu** (Dispatcher için): test dosyalarının commit zaman damgası fonksiyonel koddan önce olmalı.
-- **OOP + SOLID** tüm servislerde geçerli.
+- **OOP + SOLID** tüm servislerde geçerli (Interface, Encapsulation, Abstraction, Inheritance ve Polymorphism).
 - **docker-compose up** ile tüm sistem tek seferde ayağa kalkmalı.
 - Servisler arası veri transferi JSON.
 - Her fazda önce testler yazılır ve commit'lenir (kısım A), sonra uygulama geliştirilir (kısım B).
@@ -52,7 +52,7 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - Branch stratejisi: Branch yönetimi Biz yani kullanıcılar tarafından elle yapılır faz sonunda gerekli push işlemini gerçekleriz.
 - Rapor `README.md` olarak GitHub'da Markdown + Mermaid ile yazılır.
 - Yük testi sonuçları (50 / 100 / 200 / 500 eş zamanlı istek) rapora ve UI'a yansıtılır.
-- **Test logları:** Her fazın B kısmı tamamlandığında `pytest --tb=short -v` / `mvn test` çıktısı `test-logs/faz-N.txt` dosyasına kaydedilip commit'lenir. Bu çıktılar README'deki "Test Senaryoları ve Sonuçları" bölümüne özetlenerek eklenir (proje raporu gereği).
+- **Test logları:** Her fazın B kısmı tamamlandığında `mvn test` çıktısı `test-logs/faz-N.txt` dosyasına kaydedilip commit'lenir. Bu çıktılar README'deki "Test Senaryoları ve Sonuçları" bölümüne özetlenerek eklenir (proje raporu gereği).
 
 ---
 
@@ -64,18 +64,18 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [x] Dispatcher `/health` endpoint'inin 200 döndürdüğünü doğrulayan pytest testi yaz. → `tests/test_dispatcher_health.py`
-- [x] `docker-compose up` sonrası tüm servislerin ayakta olduğunu kontrol eden smoke test betiği yaz. → `tests/test_smoke.py`
-- [x] Redis bağlantısının açık olduğunu test et (ping/pong). → `tests/test_redis_connection.py`
+- [x] Dispatcher `/health` endpoint'inin 200 döndürdüğünü doğrulayan JUnit 5 testi yaz (`@SpringBootTest` ile — Docker gerektirmez). → `dispatcher/src/test/java/com/yazlab/dispatcher/HealthEndpointTest.java`
+- [x] `docker-compose up` sonrası tüm servislerin ayakta olduğunu kontrol eden smoke test betiği yaz. → `tests/smoke-test.sh` (**Not:** Bu JUnit ile yapılamaz; Docker ağ seviyesinde çalışır. `curl` veya `wget` ile her servisin `/health` endpoint'i kontrol edilir.)
+- [x] Redis bağlantısının açık olduğunu test et (ping/pong). → `tests/redis-check.sh` (**Not:** Bu da shell script olmalı; `redis-cli ping` ile kontrol edilir. JUnit testi Docker ayaktayken çalışacağı için bağımsız bir betik daha güvenlidir.)
 - [x] **Testleri commit'le** (zaman damgası B'den önce olmalı).
 
 #### B — Uygulama
-- [x] Proje klasör yapısını oluştur: `dispatcher/`, `auth-service/`, `user-service/`, `product-service/`, `docker-compose.yml`, `k6/`, `grafana/`, `prometheus/`.
-- [x] Her servis için `Dockerfile` yaz (Python: `uvicorn`, Java: `maven` multi-stage build).
-- [x] `docker-compose.yml`: tüm servisleri, Redis'i ve MongoDB'yi tanımla. Mikroservisler `internal` network'te, Dispatcher dışa açık.
-- [x] FastAPI Dispatcher'a `/health` endpoint'i ekle.
-- [x] Testleri çalıştır → çıktıyı `test-logs/faz-1.txt` olarak kaydet ve commit'le. (15/15 passed)
-- [x] **AGENTS.md'yi güncelle.**
+- [ ] Proje klasör yapısını oluştur: `dispatcher/`, `auth-service/`, `user-service/`, `product-service/`, `docker-compose.yml`, `k6/`, `grafana/`, `prometheus/`.
+- [ ] Her servis için `Dockerfile` yaz (Java: `maven` multi-stage build).
+- [ ] `docker-compose.yml`: tüm servisleri, Redis'i ve MongoDB'yi tanımla. Mikroservisler `internal` network'te, Dispatcher dışa açık.
+- [ ] Spring Boot Dispatcher'a `/health` endpoint'i ekle (`/actuator/health` veya özel controller).
+- [ ] Testleri çalıştır → çıktıyı `test-logs/faz-1.txt` olarak kaydet ve commit'le. (15/15 passed)
+- [ ] **AGENTS.md'yi güncelle.**
 
 ---
 
@@ -83,17 +83,17 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Efe**
 
 #### A — Testler (önce commit'le)
-- [ ] `POST /auth/login` geçerli credential → 200 + JWT döner (pytest).
-- [ ] `POST /auth/login` yanlış credential → 401 döner (pytest).
-- [ ] JWT decode testi: geçerli token → payload doğru; süresi dolmuş → hata (pytest).
-- [ ] Dispatcher geçersiz token ile gelen isteği 401 ile reddeder (pytest).
+- [ ] JUnit 5: `POST /auth/login` geçerli credential → 200 + JWT döner.
+- [ ] JUnit 5: `POST /auth/login` yanlış credential → 401 döner.
+- [ ] JWT decode testi: geçerli token → payload doğru; süresi dolmuş → hata.
+- [ ] Dispatcher geçersiz token ile gelen isteği 401 ile reddeder (JUnit 5 + MockMvc).
 - [ ] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] Auth Service: FastAPI + PyJWT. `POST /auth/login`, `POST /auth/register`, `POST /auth/validate` endpoint'leri.
+- [ ] Auth Service: Spring Boot + Spring Security + JJWT. `POST /auth/login`, `POST /auth/register`, `POST /auth/validate` endpoint'leri.
 - [ ] Kullanıcı verisi MongoDB'de saklanır (auth-service'in kendi izole DB'si).
-- [ ] Dispatcher'a JWT doğrulama middleware'i ekle: her istekte `Authorization: Bearer <token>` kontrol edilir, `/auth/*` hariç.
-- [ ] Dispatcher, token doğrulama için Auth Service'e internal ağdan istek atar.
+- [ ] Dispatcher'a JWT doğrulama filter'ı ekle (`OncePerRequestFilter`): her istekte `Authorization: Bearer <token>` kontrol edilir, `/auth/**` hariç.
+- [ ] Dispatcher JWT'yi **local olarak doğrular** (JJWT kütüphanesi + paylaşılan secret key — `application.yml`'de tanımlı). Auth Service'e her istekte HTTP çağrısı yapılmaz; bu hem performans hem de tek nokta arıza riski yaratır. Auth Service'e yalnızca `/auth/login` ve `/auth/register` için gidilir.
 - [ ] Testleri çalıştır → `test-logs/faz-2.txt` olarak kaydet ve commit'le.
 - [ ] **AGENTS.md'yi güncelle.**
 
@@ -103,15 +103,15 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [ ] `GET /users/` isteğinin User Service'e yönlendirildiğini doğrula (mock servis ile pytest).
-- [ ] `GET /products/` isteğinin Product Service'e yönlendirildiğini doğrula (pytest).
-- [ ] Ulaşılamayan servise istek → 502 / 503 döner (pytest).
-- [ ] Hatalı URL'ye istek → 404 döner (pytest).
-- [ ] Redis'e log kaydının düştüğünü test et (pytest).
+- [ ] `GET /users/` isteğinin User Service'e yönlendirildiğini doğrula (mock servis ile JUnit 5 + MockMvc).
+- [ ] `GET /products/` isteğinin Product Service'e yönlendirildiğini doğrula (JUnit 5).
+- [ ] Ulaşılamayan servise istek → 502 / 503 döner (JUnit 5).
+- [ ] Hatalı URL'ye istek → 404 döner (JUnit 5).
+- [ ] Redis'e log kaydının düştüğünü test et (JUnit 5 + Testcontainers Redis).
 - [ ] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`httpx` async reverse proxy).
+- [ ] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`WebClient` async reverse proxy).
 - [ ] Yönlendirme tablosunu Redis'te tut (servis adı → internal URL).
 - [ ] Her istek/yanıt için Redis'e log yaz: timestamp, method, path, status, latency.
 - [ ] 4xx / 5xx hata kodlarını doğru döndür (asla `200 + {"error": true}` değil).
@@ -126,7 +126,6 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 #### A — Testler (önce commit'le)
 - [ ] JUnit 5: User Service CRUD — `POST /users` → 201, `GET /users/{id}` → 200 veya 404, `PUT /users/{id}` → 200, `DELETE /users/{id}` → 204.
 - [ ] JUnit 5: Product Service CRUD (aynı pattern).
-- [ ] Dispatcher'ı bypass eden doğrudan isteğin reddedildiğini test et (network isolation).
 - [ ] MongoDB bağlantısı entegrasyon testi (Testcontainers kullanılabilir).
 - [ ] **Testleri commit'le.**
 
@@ -134,7 +133,7 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [ ] User Service: Spring Boot + Spring Data MongoDB. `User` entity, `UserRepository`, `UserService`, `UserController`. RMM Seviye 2 uyumlu endpoint'ler.
 - [ ] Product Service: aynı yapı (`Product` entity). Her servisin kendi izole MongoDB DB'si.
 - [ ] Her servis yalnızca internal Docker network'te erişilebilir.
-- [ ] Network isolation'ı ekran görüntüleriyle belgele (rapora eklenecek).
+- [ ] Network isolation'ı belgele: `docker-compose.yml`'de mikroservislerin `ports` yerine sadece `expose` kullandığını göster ve `docker network inspect` çıktısını ekran görüntüsüyle rapora ekle. (**Not:** Bu JUnit ile test edilemez — network isolation Docker ağ seviyesinde çalışır, servis kodu bunu görmez.)
 - [ ] Testleri çalıştır → `mvn test > test-logs/faz-4.txt` olarak kaydet ve commit'le.
 - [ ] **AGENTS.md'yi güncelle.**
 
@@ -144,12 +143,12 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [ ] Dispatcher `/metrics` endpoint'inin Prometheus formatında veri döndürdüğünü test et (pytest).
+- [ ] Dispatcher `/actuator/prometheus` endpoint'inin Prometheus formatında veri döndürdüğünü test et (JUnit 5 + MockMvc).
 - [ ] Grafana container'ının ayakta ve datasource'un bağlı olduğunu smoke test ile doğrula.
 - [ ] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] `prometheus-fastapi-instrumentator` ekle → Dispatcher `/metrics` endpoint'i.
+- [ ] `micrometer-registry-prometheus` bağımlılığını ekle → Dispatcher `/actuator/prometheus` endpoint'i.
 - [ ] `prometheus.yml` scrape konfigürasyonu yaz.
 - [ ] Grafana'ya Prometheus datasource ekle; trafik dashboard'u oluştur (RPS, latency, hata oranı, servis başına istek).
 - [ ] Basit HTML UI: Grafana iframe embed + Redis'ten son N logu çeken log tablosu.
