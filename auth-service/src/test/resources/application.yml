@@ -7,6 +7,12 @@ spring:
       name: test
       password: test
 
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 7.0.0
+
 jwt:
   secret: yazlab2-super-secret-key-change-in-prod-256bit
   expiration-ms: 3600000
