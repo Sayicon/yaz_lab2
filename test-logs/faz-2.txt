@@ -1,0 +1,61 @@
+========================================================
+FAZ 2 — Auth Service & JWT  |  Test Sonuçları
+Tarih: 2026-03-30
+========================================================
+
+--- AUTH SERVICE ---
+
+[INFO] Building auth-service 0.0.1-SNAPSHOT
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.yazlab.auth.JwtTokenTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.42 s
+[INFO] Running com.yazlab.auth.LoginEndpointTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.193 s
+
+[INFO] Results:
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time: 49.153 s
+
+--- DISPATCHER ---
+
+[INFO] Building dispatcher 0.0.1-SNAPSHOT
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.yazlab.dispatcher.HealthEndpointTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 23.65 s
+[INFO] Running com.yazlab.dispatcher.JwtAuthFilterTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.513 s
+
+[INFO] Results:
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time: 48.172 s
+
+========================================================
+TOPLAM: 12 test, 12 passed, 0 failed, 0 skipped
+========================================================
+
+Test Senaryoları:
+  auth-service / LoginEndpointTest:
+    [PASS] login_withValidCredentials_shouldReturn200AndJwt
+    [PASS] login_withWrongPassword_shouldReturn401
+    [PASS] login_withMissingBody_shouldReturn400
+
+  auth-service / JwtTokenTest:
+    [PASS] validateToken_withValidToken_shouldReturn200AndCorrectPayload
+    [PASS] validateToken_withExpiredToken_shouldReturn401
+    [PASS] validateToken_withMalformedToken_shouldReturn401
+
+  dispatcher / HealthEndpointTest:
+    [PASS] healthEndpoint_shouldReturn200
+    [PASS] healthEndpoint_shouldReturnUpStatus
+
+  dispatcher / JwtAuthFilterTest:
+    [PASS] request_withNoAuthHeader_shouldReturn401
+    [PASS] request_withInvalidToken_shouldReturn401
+    [PASS] request_withExpiredToken_shouldReturn401
+    [PASS] request_toAuthEndpoint_withNoToken_shouldNotReturn401
