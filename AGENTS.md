@@ -64,10 +64,10 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [ ] Dispatcher `/health` endpoint'inin 200 döndürdüğünü doğrulayan pytest testi yaz.
-- [ ] `docker-compose up` sonrası tüm servislerin ayakta olduğunu kontrol eden smoke test betiği yaz.
-- [ ] Redis bağlantısının açık olduğunu test et (ping/pong).
-- [ ] **Testleri commit'le** (zaman damgası B'den önce olmalı).
+- [x] Dispatcher `/health` endpoint'inin 200 döndürdüğünü doğrulayan pytest testi yaz. → `tests/test_dispatcher_health.py`
+- [x] `docker-compose up` sonrası tüm servislerin ayakta olduğunu kontrol eden smoke test betiği yaz. → `tests/test_smoke.py`
+- [x] Redis bağlantısının açık olduğunu test et (ping/pong). → `tests/test_redis_connection.py`
+- [x] **Testleri commit'le** (zaman damgası B'den önce olmalı).
 
 #### B — Uygulama
 - [ ] Proje klasör yapısını oluştur: `dispatcher/`, `auth-service/`, `user-service/`, `product-service/`, `docker-compose.yml`, `k6/`, `grafana/`, `prometheus/`.
