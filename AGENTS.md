@@ -120,8 +120,8 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [x] Kullanıcı verisi MongoDB'de saklanır (auth-service'in kendi izole DB'si). → `User` entity, `UserRepository`, `AuthService`
 - [x] Dispatcher'a JWT doğrulama filter'ı ekle (`JwtAuthFilter implements GlobalFilter`): her istekte `Authorization: Bearer <token>` kontrol edilir, `/auth/**` hariç.
 - [x] Dispatcher JWT'yi local olarak doğrular (JJWT + paylaşılan secret key). Auth Service'e HTTP çağrısı yapılmaz.
-- [ ] Testleri çalıştır → `test-logs/faz-2.txt` olarak kaydet ve commit'le.
-- [ ] **AGENTS.md'yi güncelle.**
+- [x] Testleri çalıştır → `test-logs/faz-2.txt` olarak kaydet ve commit'le. (12/12 passed)
+- [x] **AGENTS.md'yi güncelle.**
 
 ---
 
