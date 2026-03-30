@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: dispatcher-test
+  # Redis bağlantısı test sırasında devre dışı — sadece health testi
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration
+  cloud:
+    gateway:
+      routes: []
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
