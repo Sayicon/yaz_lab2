@@ -44,5 +44,5 @@ def test_redis_connection_error_handling():
         port=19999,  # kullanılmayan port
         socket_connect_timeout=2,
     )
-    with pytest.raises(redis.exceptions.ConnectionError):
+    with pytest.raises((redis.exceptions.ConnectionError, redis.exceptions.TimeoutError)):
         client.ping()

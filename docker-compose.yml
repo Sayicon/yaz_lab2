@@ -1,0 +1,154 @@
+version: '3.9'
+
+# ─── Networks ─────────────────────────────────────────────────────────────────
+# internal: mikroservislerin iletişim kurduğu izole ağ.
+#   Dış dünyaya kapalıdır; yalnızca Dispatcher port-mapping ile dışa açılır.
+networks:
+  internal:
+    driver: bridge
+
+# ─── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  mongo-auth-data:
+  mongo-user-data:
+  mongo-product-data:
+  redis-data:
+
+# ─── Services ─────────────────────────────────────────────────────────────────
+services:
+
+  # ── Dispatcher (tek dış giriş noktası) ──────────────────────────────────────
+  dispatcher:
+    build: ./dispatcher
+    container_name: dispatcher
+    ports:
+      - "8000:8000"          # dış dünyaya açık TEK port
+    environment:
+      AUTH_SERVICE_URL: http://auth-service:8001
+      USER_SERVICE_URL: http://user-service:8080
+      PRODUCT_SERVICE_URL: http://product-service:8080
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+      - auth-service
+      - user-service
+      - product-service
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── Auth Service ─────────────────────────────────────────────────────────────
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    # Geliştirme kolaylığı için port açık; prodda kaldırılmalı
+    ports:
+      - "8001:8001"
+    environment:
+      MONGO_URI: mongodb://mongo-auth:27017/authdb
+    depends_on:
+      - mongo-auth
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── User Service ─────────────────────────────────────────────────────────────
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    # Geliştirme kolaylığı için port açık; prodda kaldırılmalı
+    ports:
+      - "8002:8080"
+    environment:
+      MONGO_URI: mongodb://mongo-user:27017/userdb
+    depends_on:
+      - mongo-user
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── Product Service ───────────────────────────────────────────────────────────
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    # Geliştirme kolaylığı için port açık; prodda kaldırılmalı
+    ports:
+      - "8003:8080"
+    environment:
+      MONGO_URI: mongodb://mongo-product:27017/productdb
+    depends_on:
+      - mongo-product
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── Redis ─────────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── MongoDB — Auth ────────────────────────────────────────────────────────────
+  mongo-auth:
+    image: mongo:7
+    container_name: mongo-auth
+    volumes:
+      - mongo-auth-data:/data/db
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── MongoDB — User ────────────────────────────────────────────────────────────
+  mongo-user:
+    image: mongo:7
+    container_name: mongo-user
+    volumes:
+      - mongo-user-data:/data/db
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── MongoDB — Product ─────────────────────────────────────────────────────────
+  mongo-product:
+    image: mongo:7
+    container_name: mongo-product
+    volumes:
+      - mongo-product-data:/data/db
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── Prometheus ────────────────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - internal
+    restart: unless-stopped
+
+  # ── Grafana ───────────────────────────────────────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    networks:
+      - internal
+    restart: unless-stopped

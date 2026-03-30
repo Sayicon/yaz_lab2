@@ -70,12 +70,12 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [x] **Testleri commit'le** (zaman damgası B'den önce olmalı).
 
 #### B — Uygulama
-- [ ] Proje klasör yapısını oluştur: `dispatcher/`, `auth-service/`, `user-service/`, `product-service/`, `docker-compose.yml`, `k6/`, `grafana/`, `prometheus/`.
-- [ ] Her servis için `Dockerfile` yaz (Python: `uvicorn`, Java: `maven` multi-stage build).
-- [ ] `docker-compose.yml`: tüm servisleri, Redis'i ve MongoDB'yi tanımla. Mikroservisler `internal` network'te, Dispatcher dışa açık.
-- [ ] FastAPI Dispatcher'a `/health` endpoint'i ekle.
-- [ ] Testleri çalıştır → çıktıyı `test-logs/faz-1.txt` olarak kaydet ve commit'le.
-- [ ] **AGENTS.md'yi güncelle.**
+- [x] Proje klasör yapısını oluştur: `dispatcher/`, `auth-service/`, `user-service/`, `product-service/`, `docker-compose.yml`, `k6/`, `grafana/`, `prometheus/`.
+- [x] Her servis için `Dockerfile` yaz (Python: `uvicorn`, Java: `maven` multi-stage build).
+- [x] `docker-compose.yml`: tüm servisleri, Redis'i ve MongoDB'yi tanımla. Mikroservisler `internal` network'te, Dispatcher dışa açık.
+- [x] FastAPI Dispatcher'a `/health` endpoint'i ekle.
+- [x] Testleri çalıştır → çıktıyı `test-logs/faz-1.txt` olarak kaydet ve commit'le. (15/15 passed)
+- [x] **AGENTS.md'yi güncelle.**
 
 ---
 

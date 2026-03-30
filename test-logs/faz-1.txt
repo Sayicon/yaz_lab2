@@ -1,0 +1,23 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-8.3.5, pluggy-1.6.0 -- C:\Users\Kerem\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Kerem\Desktop\yaz_lab2
+collecting ... collected 15 items
+
+tests/test_dispatcher_health.py::test_health_returns_200 PASSED          [  6%]
+tests/test_dispatcher_health.py::test_health_response_has_status_field PASSED [ 13%]
+tests/test_dispatcher_health.py::test_health_status_is_ok PASSED         [ 20%]
+tests/test_redis_connection.py::test_redis_ping PASSED                   [ 26%]
+tests/test_redis_connection.py::test_redis_set_and_get PASSED            [ 33%]
+tests/test_redis_connection.py::test_redis_connection_error_handling PASSED [ 40%]
+tests/test_smoke.py::test_service_is_up[dispatcher-http://localhost:8000/health] PASSED [ 46%]
+tests/test_smoke.py::test_service_is_up[auth-service-http://localhost:8001/health] PASSED [ 53%]
+tests/test_smoke.py::test_service_is_up[user-service-http://localhost:8002/health] PASSED [ 60%]
+tests/test_smoke.py::test_service_is_up[product-service-http://localhost:8003/health] PASSED [ 66%]
+tests/test_smoke.py::test_dispatcher_is_only_external_service PASSED     [ 73%]
+tests/test_smoke.py::test_health_response_is_json[dispatcher-http://localhost:8000/health] PASSED [ 80%]
+tests/test_smoke.py::test_health_response_is_json[auth-service-http://localhost:8001/health] PASSED [ 86%]
+tests/test_smoke.py::test_health_response_is_json[user-service-http://localhost:8002/health] PASSED [ 93%]
+tests/test_smoke.py::test_health_response_is_json[product-service-http://localhost:8003/health] PASSED [100%]
+
+============================= 15 passed in 4.68s ==============================
