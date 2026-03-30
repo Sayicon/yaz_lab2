@@ -27,11 +27,37 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 | User / Product / Order Service | Java · Spring Boot · Maven |
 | Dispatcher DB | Redis |
 | Mikroservis DB'leri | MongoDB (her servis izole, ayrı DB) |
-| UI / Dashboard | HTML + Grafana embed |
+| UI / Dashboard | HTML + Tailwind CSS + Grafana embed (`ui/index.html`) |
 | Container | Docker + docker-compose |
 | Monitoring | Prometheus + Grafana (Micrometer) |
 | Yük Testi | k6 |
 | Test Framework | JUnit 5 · Mockito · Spring Boot Test (tüm servisler) |
+
+---
+
+## UI / Dashboard Tasarımı
+
+> **Kaynak dosyalar:** `index.html` (Google Stitch export) · `DESIGN.md` (tasarım sistemi)
+
+### Tema: "The Kinetic Console" — Utilitarian Brutalism
+- **Renk paleti:** `background` #0d1117 → `surface` #161b22 → `surface-container` #1c2026 (tonal katmanlama, gölge yok)
+- **Tipografi:** JetBrains Mono — exclusive. Gradyan yok, köşe yarıçapı max 6px.
+- **Durum renkleri:** `tertiary` #3fb950 (UP/OK) · `warning` #d29922 · `error` #f85149 (CRITICAL)
+- **Zebra tablo:** satır arası `surface` / `surface-container-low` dönüşümü
+- **Ghost border:** `outline-variant` %40 opaklık ile dış çerçeve
+
+### Sayfalar (sidebar navigasyonu)
+1. **Overview** — Summary bar (4 KPI kart) + Service Grid (6 kart: Dispatcher, Auth, User, Redis, MongoDB, Product)
+2. **Live Metrics** — Grafana iframe placeholder + Redis log tablosu (timestamp · method · path · status · latency · service)
+3. **API Explorer** — Endpoint sidebar + Request/Response builder
+4. **Load Test Results** — k6 sonuçları tablosu
+5. **System Info** — Sistem bilgileri
+
+### Uygulama Kuralları (Faz 5'te)
+- `index.html` `ui/` klasörüne taşı; Thymeleaf/static resource olarak sun veya ayrı Nginx container'da çalıştır.
+- Grafana iframe: `http://localhost:3000/d/dashboard` → `docker-compose` ayağa kalkınca otomatik bağlanır.
+- Log tablosu: Dispatcher'dan `GET /api/logs?limit=50` endpoint'i çeker (Redis'ten son 50 log).
+- Statik sayı/mock data yerine gerçek API çağrıları (fetch/XHR) ile değiştirilecek alanlar: Total Requests, Error Rate, Avg Latency, servis ping değerleri.
 
 ---
 
@@ -151,7 +177,8 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [ ] `micrometer-registry-prometheus` bağımlılığını ekle → Dispatcher `/actuator/prometheus` endpoint'i.
 - [ ] `prometheus.yml` scrape konfigürasyonu yaz.
 - [ ] Grafana'ya Prometheus datasource ekle; trafik dashboard'u oluştur (RPS, latency, hata oranı, servis başına istek).
-- [ ] Basit HTML UI: Grafana iframe embed + Redis'ten son N logu çeken log tablosu.
+- [ ] `index.html`'i `ui/index.html` olarak projeye entegre et (Google Stitch tasarımına sadık kal — bkz. `DESIGN.md`). Grafana iframe ve log tablosunu gerçek API'ye bağla (`GET /api/logs?limit=50`).
+- [ ] UI için `ui/` klasörünü Nginx container veya Dispatcher static resource olarak sun.
 - [ ] Testleri çalıştır → `test-logs/faz-5.txt` olarak kaydet ve commit'le.
 - [ ] **AGENTS.md'yi güncelle.**
 
