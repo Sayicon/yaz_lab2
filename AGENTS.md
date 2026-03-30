@@ -109,10 +109,10 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Efe**
 
 #### A — Testler (önce commit'le)
-- [ ] JUnit 5: `POST /auth/login` geçerli credential → 200 + JWT döner.
-- [ ] JUnit 5: `POST /auth/login` yanlış credential → 401 döner.
-- [ ] JWT decode testi: geçerli token → payload doğru; süresi dolmuş → hata.
-- [ ] Dispatcher geçersiz token ile gelen isteği 401 ile reddeder (JUnit 5 + MockMvc).
+- [x] JUnit 5: `POST /auth/login` geçerli credential → 200 + JWT döner. → `auth-service/.../LoginEndpointTest.java`
+- [x] JUnit 5: `POST /auth/login` yanlış credential → 401 döner. → `auth-service/.../LoginEndpointTest.java`
+- [x] JWT decode testi: geçerli token → payload doğru; süresi dolmuş → 401. → `auth-service/.../JwtTokenTest.java`
+- [x] Dispatcher geçersiz token ile gelen isteği 401 ile reddeder. → `dispatcher/.../JwtAuthFilterTest.java`
 - [ ] **Testleri commit'le.**
 
 #### B — Uygulama

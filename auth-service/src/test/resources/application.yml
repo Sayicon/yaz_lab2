@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: auth-service-test
+  # Embedded MongoDB (flapdoodle) otomatik devreye girer - URI gerekmez
+  security:
+    user:
+      name: test
+      password: test
+
+jwt:
+  secret: yazlab2-super-secret-key-change-in-prod-256bit
+  expiration-ms: 3600000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+server:
+  port: 0
