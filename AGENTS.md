@@ -113,13 +113,13 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [x] JUnit 5: `POST /auth/login` yanlış credential → 401 döner. → `auth-service/.../LoginEndpointTest.java`
 - [x] JWT decode testi: geçerli token → payload doğru; süresi dolmuş → 401. → `auth-service/.../JwtTokenTest.java`
 - [x] Dispatcher geçersiz token ile gelen isteği 401 ile reddeder. → `dispatcher/.../JwtAuthFilterTest.java`
-- [ ] **Testleri commit'le.**
+- [x] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] Auth Service: Spring Boot + Spring Security + JJWT. `POST /auth/login`, `POST /auth/register`, `POST /auth/validate` endpoint'leri.
-- [ ] Kullanıcı verisi MongoDB'de saklanır (auth-service'in kendi izole DB'si).
-- [ ] Dispatcher'a JWT doğrulama filter'ı ekle (`OncePerRequestFilter`): her istekte `Authorization: Bearer <token>` kontrol edilir, `/auth/**` hariç.
-- [ ] Dispatcher JWT'yi **local olarak doğrular** (JJWT kütüphanesi + paylaşılan secret key — `application.yml`'de tanımlı). Auth Service'e her istekte HTTP çağrısı yapılmaz; bu hem performans hem de tek nokta arıza riski yaratır. Auth Service'e yalnızca `/auth/login` ve `/auth/register` için gidilir.
+- [x] Auth Service: Spring Boot + Spring Security + JJWT. `POST /auth/login`, `POST /auth/register`, `POST /auth/validate` endpoint'leri.
+- [x] Kullanıcı verisi MongoDB'de saklanır (auth-service'in kendi izole DB'si). → `User` entity, `UserRepository`, `AuthService`
+- [x] Dispatcher'a JWT doğrulama filter'ı ekle (`JwtAuthFilter implements GlobalFilter`): her istekte `Authorization: Bearer <token>` kontrol edilir, `/auth/**` hariç.
+- [x] Dispatcher JWT'yi local olarak doğrular (JJWT + paylaşılan secret key). Auth Service'e HTTP çağrısı yapılmaz.
 - [ ] Testleri çalıştır → `test-logs/faz-2.txt` olarak kaydet ve commit'le.
 - [ ] **AGENTS.md'yi güncelle.**
 
