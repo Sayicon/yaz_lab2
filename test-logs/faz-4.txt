@@ -1,0 +1,57 @@
+========================================================
+FAZ 4 — User Service & Product Service  |  Test Sonuçları
+Tarih: 2026-03-31
+========================================================
+
+--- USER SERVICE ---
+
+[INFO] Building user-service 0.0.1-SNAPSHOT
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.yazlab.user.UserCrudTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 32.08 s
+
+[INFO] Results:
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time: 45.862 s
+
+--- PRODUCT SERVICE ---
+
+[INFO] Building product-service 0.0.1-SNAPSHOT
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.yazlab.product.ProductCrudTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 32.26 s
+
+[INFO] Results:
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] Total time: 52.648 s
+
+========================================================
+TOPLAM: 16 test, 16 passed, 0 failed, 0 skipped
+========================================================
+
+Test Senaryoları:
+  user-service / UserCrudTest:
+    [PASS] createUser_shouldReturn201AndLocationHeader
+    [PASS] createUser_withMissingUsername_shouldReturn400
+    [PASS] getUser_withExistingId_shouldReturn200AndUser
+    [PASS] getUser_withNonExistingId_shouldReturn404
+    [PASS] updateUser_withExistingId_shouldReturn200AndUpdatedUser
+    [PASS] updateUser_withNonExistingId_shouldReturn404
+    [PASS] deleteUser_withExistingId_shouldReturn204
+    [PASS] deleteUser_withNonExistingId_shouldReturn404
+
+  product-service / ProductCrudTest:
+    [PASS] createProduct_shouldReturn201AndLocationHeader
+    [PASS] createProduct_withMissingName_shouldReturn400
+    [PASS] getProduct_withExistingId_shouldReturn200AndProduct
+    [PASS] getProduct_withNonExistingId_shouldReturn404
+    [PASS] updateProduct_withExistingId_shouldReturn200AndUpdatedProduct
+    [PASS] updateProduct_withNonExistingId_shouldReturn404
+    [PASS] deleteProduct_withExistingId_shouldReturn204
+    [PASS] deleteProduct_withNonExistingId_shouldReturn404

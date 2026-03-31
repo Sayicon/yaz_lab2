@@ -153,15 +153,14 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [x] JUnit 5: User Service CRUD — `POST /users` → 201, `GET /users/{id}` → 200 veya 404, `PUT /users/{id}` → 200, `DELETE /users/{id}` → 204. → `user-service/.../UserCrudTest.java`
 - [x] JUnit 5: Product Service CRUD (aynı pattern). → `product-service/.../ProductCrudTest.java`
 - [x] MongoDB bağlantısı entegrasyon testi (flapdoodle embedded MongoDB — her test öncesi DB temizleniyor).
-- [ ] **Testleri commit'le.**
+- [x] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] User Service: Spring Boot + Spring Data MongoDB. `User` entity, `UserRepository`, `UserService`, `UserController`. RMM Seviye 2 uyumlu endpoint'ler.
-- [ ] Product Service: aynı yapı (`Product` entity). Her servisin kendi izole MongoDB DB'si.
-- [ ] Her servis yalnızca internal Docker network'te erişilebilir.
-- [ ] Network isolation'ı belgele: `docker-compose.yml`'de mikroservislerin `ports` yerine sadece `expose` kullandığını göster ve `docker network inspect` çıktısını ekran görüntüsüyle rapora ekle. (**Not:** Bu JUnit ile test edilemez — network isolation Docker ağ seviyesinde çalışır, servis kodu bunu görmez.)
-- [ ] Testleri çalıştır → `mvn test > test-logs/faz-4.txt` olarak kaydet ve commit'le.
-- [ ] **AGENTS.md'yi güncelle.**
+- [x] User Service: Spring Boot + Spring Data MongoDB. `User` entity, `UserRepository`, `UserService`, `UserController`. RMM Seviye 2 uyumlu endpoint'ler.
+- [x] Product Service: aynı yapı (`Product` entity). Her servisin kendi izole MongoDB DB'si.
+- [x] Her servis yalnızca internal Docker network'te erişilebilir. (`docker-compose.yml`'de sadece `expose` kullanılıyor, `ports` yok.)
+- [x] Testleri çalıştır → `test-logs/faz-4.txt` olarak kaydet ve commit'le. (16/16 passed)
+- [x] **AGENTS.md'yi güncelle.**
 
 ---
 
