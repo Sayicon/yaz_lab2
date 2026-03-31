@@ -150,9 +150,9 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Efe**
 
 #### A — Testler (önce commit'le)
-- [ ] JUnit 5: User Service CRUD — `POST /users` → 201, `GET /users/{id}` → 200 veya 404, `PUT /users/{id}` → 200, `DELETE /users/{id}` → 204.
-- [ ] JUnit 5: Product Service CRUD (aynı pattern).
-- [ ] MongoDB bağlantısı entegrasyon testi (Testcontainers kullanılabilir).
+- [x] JUnit 5: User Service CRUD — `POST /users` → 201, `GET /users/{id}` → 200 veya 404, `PUT /users/{id}` → 200, `DELETE /users/{id}` → 204. → `user-service/.../UserCrudTest.java`
+- [x] JUnit 5: Product Service CRUD (aynı pattern). → `product-service/.../ProductCrudTest.java`
+- [x] MongoDB bağlantısı entegrasyon testi (flapdoodle embedded MongoDB — her test öncesi DB temizleniyor).
 - [ ] **Testleri commit'le.**
 
 #### B — Uygulama
