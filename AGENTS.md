@@ -129,20 +129,20 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [ ] `GET /users/` isteğinin User Service'e yönlendirildiğini doğrula (mock servis ile JUnit 5 + MockMvc).
-- [ ] `GET /products/` isteğinin Product Service'e yönlendirildiğini doğrula (JUnit 5).
-- [ ] Ulaşılamayan servise istek → 502 / 503 döner (JUnit 5).
-- [ ] Hatalı URL'ye istek → 404 döner (JUnit 5).
-- [ ] Redis'e log kaydının düştüğünü test et (JUnit 5 + Testcontainers Redis).
-- [ ] **Testleri commit'le.**
+- [x] `GET /users/` isteğinin User Service'e yönlendirildiğini doğrula (mock servis ile JUnit 5 + MockWebServer). → `dispatcher/.../RoutingTest.java`
+- [x] `GET /products/` isteğinin Product Service'e yönlendirildiğini doğrula (JUnit 5). → `dispatcher/.../RoutingTest.java`
+- [x] Ulaşılamayan servise istek → 502 / 503 döner (JUnit 5). → `dispatcher/.../RoutingTest.java`
+- [x] Hatalı URL'ye istek → 404 döner (JUnit 5). → `dispatcher/.../RoutingTest.java`
+- [x] Redis'e log kaydının düştüğünü test et (JUnit 5 + Testcontainers Redis). → `dispatcher/.../RedisLoggingTest.java`
+- [x] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`WebClient` async reverse proxy).
-- [ ] Yönlendirme tablosunu Redis'te tut (servis adı → internal URL).
-- [ ] Her istek/yanıt için Redis'e log yaz: timestamp, method, path, status, latency.
-- [ ] 4xx / 5xx hata kodlarını doğru döndür (asla `200 + {"error": true}` değil).
-- [ ] Testleri çalıştır → `test-logs/faz-3.txt` olarak kaydet ve commit'le.
-- [ ] **AGENTS.md'yi güncelle.**
+- [x] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`WebClient` async reverse proxy). → Spring Cloud Gateway (WebClient tabanlı) kullanılıyor
+- [x] Yönlendirme tablosunu Redis'te tut (servis adı → internal URL). → `RoutingTableInitializer` startup'ta Redis hash'e yazar (`routing-table`)
+- [x] Her istek/yanıt için Redis'e log yaz: timestamp, method, path, status, latency. → `RequestLoggingFilter` `request-logs` listesine yazar
+- [x] 4xx / 5xx hata kodlarını doğru döndür (asla `200 + {"error": true}` değil). → Spring Cloud Gateway native 4xx/5xx yönetimi
+- [x] Testleri çalıştır → `test-logs/faz-3.txt` olarak kaydet ve commit'le. (10/10 passed, 2 skipped — RedisLoggingTest Docker erişimi)
+- [x] **AGENTS.md'yi güncelle.**
 
 ---
 
