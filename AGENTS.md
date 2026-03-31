@@ -137,12 +137,12 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [x] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`WebClient` async reverse proxy).
-- [ ] Yönlendirme tablosunu Redis'te tut (servis adı → internal URL).
-- [ ] Her istek/yanıt için Redis'e log yaz: timestamp, method, path, status, latency.
-- [ ] 4xx / 5xx hata kodlarını doğru döndür (asla `200 + {"error": true}` değil).
-- [ ] Testleri çalıştır → `test-logs/faz-3.txt` olarak kaydet ve commit'le.
-- [ ] **AGENTS.md'yi güncelle.**
+- [x] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`WebClient` async reverse proxy). → Spring Cloud Gateway (WebClient tabanlı) kullanılıyor
+- [x] Yönlendirme tablosunu Redis'te tut (servis adı → internal URL). → `RoutingTableInitializer` startup'ta Redis hash'e yazar (`routing-table`)
+- [x] Her istek/yanıt için Redis'e log yaz: timestamp, method, path, status, latency. → `RequestLoggingFilter` `request-logs` listesine yazar
+- [x] 4xx / 5xx hata kodlarını doğru döndür (asla `200 + {"error": true}` değil). → Spring Cloud Gateway native 4xx/5xx yönetimi
+- [x] Testleri çalıştır → `test-logs/faz-3.txt` olarak kaydet ve commit'le. (10/10 passed, 2 skipped — RedisLoggingTest Docker erişimi)
+- [x] **AGENTS.md'yi güncelle.**
 
 ---
 
