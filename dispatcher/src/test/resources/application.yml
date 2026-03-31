@@ -9,13 +9,21 @@ spring:
     gateway:
       routes:
         - id: user-service
-          uri: http://localhost:9999
+          uri: ${USER_SERVICE_URL:http://localhost:9999}
           predicates:
             - Path=/users/**
+        - id: product-service
+          uri: ${PRODUCT_SERVICE_URL:http://localhost:9999}
+          predicates:
+            - Path=/products/**
         - id: auth-service
-          uri: http://localhost:9999
+          uri: ${AUTH_SERVICE_URL:http://localhost:9999}
           predicates:
             - Path=/auth/**
+        - id: dead-service
+          uri: ${DEAD_SERVICE_URL:http://localhost:1}
+          predicates:
+            - Path=/dead/**
 
 jwt:
   secret: yazlab2-super-secret-key-change-in-prod-256bit
