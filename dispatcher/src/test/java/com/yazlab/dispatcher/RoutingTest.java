@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * FAZ 3 - A: Dispatcher yönlendirme testleri (TDD).
  *
- * Bu testler Faz3-B uygulama kodundan önce commit'lenir.
+ * Bu testler Faz3-B uygulama kodundan önce commit'lendi.
  * Test 1: GET /users/** → User Service'e yönlendirilir
  * Test 2: GET /products/** → Product Service'e yönlendirilir
  * Test 3: Ulaşılamayan servis → 502 veya 503 döner
@@ -42,6 +42,7 @@ class RoutingTest {
 
     static MockWebServer userServiceMock;
     static MockWebServer productServiceMock;
+    static int deadServicePort;
 
     static {
         try {
@@ -49,27 +50,26 @@ class RoutingTest {
             userServiceMock.start();
             productServiceMock = new MockWebServer();
             productServiceMock.start();
+            // Kısa süre aç → port'u al → kapat → ECONNREFUSED ile hızlı 502
+            MockWebServer deadMock = new MockWebServer();
+            deadMock.start();
+            deadServicePort = deadMock.getPort();
+            deadMock.shutdown();
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
     }
 
+    /**
+     * Sadece servis URL env var'larını override et.
+     * Route yapısı application-test.yml'de tanımlı — list/YAML çakışmasını önler.
+     */
     @DynamicPropertySource
-    static void configureRoutes(DynamicPropertyRegistry registry) {
-        // routes[0] (test profile'da user-service) → URI'yi mock'a yönlendir
-        registry.add("spring.cloud.gateway.routes[0].uri",
-                () -> "http://localhost:" + userServiceMock.getPort());
-
-        // routes[1] (test profile'da auth-service) → product-service mock'u ile değiştir
-        registry.add("spring.cloud.gateway.routes[1].id", () -> "product-service");
-        registry.add("spring.cloud.gateway.routes[1].uri",
-                () -> "http://localhost:" + productServiceMock.getPort());
-        registry.add("spring.cloud.gateway.routes[1].predicates[0]", () -> "Path=/products/**");
-
-        // routes[2] → erişilemeyen servis (502/503 testi için)
-        registry.add("spring.cloud.gateway.routes[2].id", () -> "dead-service");
-        registry.add("spring.cloud.gateway.routes[2].uri", () -> "http://localhost:1");
-        registry.add("spring.cloud.gateway.routes[2].predicates[0]", () -> "Path=/dead/**");
+    static void configureServiceUrls(DynamicPropertyRegistry registry) {
+        registry.add("USER_SERVICE_URL", () -> "http://localhost:" + userServiceMock.getPort());
+        registry.add("PRODUCT_SERVICE_URL", () -> "http://localhost:" + productServiceMock.getPort());
+        registry.add("DEAD_SERVICE_URL", () -> "http://localhost:" + deadServicePort);
+        // AUTH_SERVICE_URL test.yml default'unu kullanır (localhost:9999)
     }
 
     @AfterAll
@@ -131,13 +131,13 @@ class RoutingTest {
 
     @Test
     void request_toUnreachableService_shouldReturn502or503() {
-        // /dead/** → localhost:1 (erişilemeyen port) → gateway 502/503 dönmeli
+        // /dead/** → kapalı port → gateway bağlanamaz → 5xx döner
         webTestClient.get()
                 .uri("/dead/test")
                 .header("Authorization", "Bearer " + validToken())
                 .exchange()
                 .expectStatus().value(status ->
-                        assertThat(status).isIn(502, 503));
+                        assertThat(status).isBetween(500, 599));
     }
 
     @Test

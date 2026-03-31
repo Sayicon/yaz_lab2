@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 class RedisLoggingTest {
 
     private static final String JWT_SECRET = "yazlab2-super-secret-key-change-in-prod-256bit";
