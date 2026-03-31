@@ -129,12 +129,12 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [ ] `GET /users/` isteğinin User Service'e yönlendirildiğini doğrula (mock servis ile JUnit 5 + MockMvc).
-- [ ] `GET /products/` isteğinin Product Service'e yönlendirildiğini doğrula (JUnit 5).
-- [ ] Ulaşılamayan servise istek → 502 / 503 döner (JUnit 5).
-- [ ] Hatalı URL'ye istek → 404 döner (JUnit 5).
-- [ ] Redis'e log kaydının düştüğünü test et (JUnit 5 + Testcontainers Redis).
-- [ ] **Testleri commit'le.**
+- [x] `GET /users/` isteğinin User Service'e yönlendirildiğini doğrula (mock servis ile JUnit 5 + MockWebServer). → `dispatcher/.../RoutingTest.java`
+- [x] `GET /products/` isteğinin Product Service'e yönlendirildiğini doğrula (JUnit 5). → `dispatcher/.../RoutingTest.java`
+- [x] Ulaşılamayan servise istek → 502 / 503 döner (JUnit 5). → `dispatcher/.../RoutingTest.java`
+- [x] Hatalı URL'ye istek → 404 döner (JUnit 5). → `dispatcher/.../RoutingTest.java`
+- [x] Redis'e log kaydının düştüğünü test et (JUnit 5 + Testcontainers Redis). → `dispatcher/.../RedisLoggingTest.java`
+- [x] **Testleri commit'le.**
 
 #### B — Uygulama
 - [ ] Dispatcher'a URL-tabanlı dinamik proxy yönlendirme ekle (`WebClient` async reverse proxy).
