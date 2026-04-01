@@ -168,9 +168,9 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Kerem**
 
 #### A — Testler (önce commit'le)
-- [ ] Dispatcher `/actuator/prometheus` endpoint'inin Prometheus formatında veri döndürdüğünü test et (JUnit 5 + MockMvc).
-- [ ] Grafana container'ının ayakta ve datasource'un bağlı olduğunu smoke test ile doğrula.
-- [ ] **Testleri commit'le.**
+- [x] Dispatcher `/actuator/prometheus` endpoint'inin Prometheus formatında veri döndürdüğünü test et (JUnit 5 + MockMvc). → `dispatcher/.../PrometheusEndpointTest.java`
+- [x] Grafana container'ının ayakta ve datasource'un bağlı olduğunu smoke test ile doğrula. → `tests/grafana-check.sh`
+- [x] **Testleri commit'le.**
 
 #### B — Uygulama
 - [ ] `micrometer-registry-prometheus` bağımlılığını ekle → Dispatcher `/actuator/prometheus` endpoint'i.
