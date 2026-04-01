@@ -1,0 +1,163 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.yazlab:dispatcher >------------------------
+[INFO] Building dispatcher 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ dispatcher ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ dispatcher ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ dispatcher ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ dispatcher ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ dispatcher ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.yazlab.dispatcher.HealthEndpointTest
+00:35:31.051 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.yazlab.dispatcher.HealthEndpointTest]: HealthEndpointTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:35:31.164 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.yazlab.dispatcher.DispatcherApplication for test class com.yazlab.dispatcher.HealthEndpointTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-04-02T00:35:31.646+03:00  INFO 6060 --- [dispatcher-test] [           main] c.yazlab.dispatcher.HealthEndpointTest   : Starting HealthEndpointTest using Java 21.0.10 with PID 6060 (started by Kerem in C:\Users\Kerem\Desktop\yaz_lab2\dispatcher)
+2026-04-02T00:35:31.646+03:00  INFO 6060 --- [dispatcher-test] [           main] c.yazlab.dispatcher.HealthEndpointTest   : The following 1 profile is active: "test"
+2026-04-02T00:35:32.744+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=c8f26919-35ae-3f77-9cb1-9f70d5857ce5
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-02T00:35:33.775+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-02T00:35:34.114+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2026-04-02T00:35:34.738+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 51005
+2026-04-02T00:35:34.790+03:00  INFO 6060 --- [dispatcher-test] [           main] c.yazlab.dispatcher.HealthEndpointTest   : Started HealthEndpointTest in 3.506 seconds (process running for 4.399)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.730 s -- in com.yazlab.dispatcher.HealthEndpointTest
+[INFO] Running com.yazlab.dispatcher.JwtAuthFilterTest
+2026-04-02T00:35:35.637+03:00  INFO 6060 --- [dispatcher-test] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.yazlab.dispatcher.JwtAuthFilterTest]: JwtAuthFilterTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02T00:35:35.651+03:00  INFO 6060 --- [dispatcher-test] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.yazlab.dispatcher.DispatcherApplication for test class com.yazlab.dispatcher.JwtAuthFilterTest
+2026-04-02T00:35:35.894+03:00 ERROR 6060 --- [dispatcher-test] [ctor-http-nio-3] a.w.r.e.AbstractErrorWebExceptionHandler : [1297feb8]  500 Server Error for HTTP POST "/auth/login"
+
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: getsockopt: localhost/127.0.0.1:9999
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	*__checkpoint ? HTTP POST "/auth/login" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:973) ~[na:na]
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:337) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:339) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:776) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.412 s -- in com.yazlab.dispatcher.JwtAuthFilterTest
+[INFO] Running com.yazlab.dispatcher.PrometheusEndpointTest
+2026-04-02T00:35:36.049+03:00  INFO 6060 --- [dispatcher-test] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.yazlab.dispatcher.PrometheusEndpointTest]: PrometheusEndpointTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02T00:35:36.066+03:00  INFO 6060 --- [dispatcher-test] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.yazlab.dispatcher.DispatcherApplication for test class com.yazlab.dispatcher.PrometheusEndpointTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.464 s -- in com.yazlab.dispatcher.PrometheusEndpointTest
+2026-04-02T00:35:36.702+03:00  INFO 6060 --- [dispatcher-test] [           main] .t.d.DockerMachineClientProviderStrategy : docker-machine executable was not found on PATH ([C:\Users\Kerem\bin, C:\Program Files\Git\mingw64\bin, C:\Program Files\Git\usr\local\bin, C:\Program Files\Git\usr\bin, C:\Program Files\Git\usr\bin, C:\Program Files\Git\mingw64\bin, C:\Program Files\Git\usr\bin, C:\Users\Kerem\bin, C:\Users\Kerem\AppData\Local\Programs\Python\Python313\Scripts, C:\Users\Kerem\AppData\Local\Programs\Microsoft VS Code, C:\Program Files\Eclipse Adoptium\jdk-21.0.10.7-hotspot\bin, C:\WINDOWS\system32, C:\WINDOWS, C:\WINDOWS\System32\Wbem, C:\WINDOWS\System32\WindowsPowerShell\v1.0, C:\WINDOWS\System32\OpenSSH, C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common, C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR, C:\Program Files\dotnet, C:\TDM-GCC-64\bin, C:\Program Files\Git\cmd, C:\Users\Kerem\AppData\Local\Programs\cursor\resources\app\bin, C:\Program Files\Microsoft SQL Server\150\Tools\Binn, C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn, C:\Program Files\cursor\resources\app\bin, C:\Program Files\nodejs, C:\Users\Kerem\AppData\Roaming\npm, C:\Program Files\Cloudflare\Cloudflare WARP, C:\Program Files\CMake\bin, C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit, C:\Program Files\Docker\Docker\resources\bin, C:\Users\Kerem\.local\bin, C:\Users\Kerem\AppData\Local\Programs\Python\Launcher, C:\Program Files\MySQL\MySQL Shell 8.0\bin, C:\Users\Kerem\AppData\Local\Microsoft\WindowsApps, C:\Users\Kerem\.dotnet\tools, C:\Users\Kerem\AppData\Local\Programs\Microsoft VS Code\bin, C:\Users\Kerem\AppData\Local\GitHubDesktop\bin, C:\Users\Kerem\AppData\Local\Programs\Antigravity\bin, C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.3\bin, C:\Program Files\Git\usr\bin\vendor_perl, C:\Program Files\Git\usr\bin\core_perl])
+2026-04-02T00:35:36.705+03:00 ERROR 6060 --- [dispatcher-test] [           main] o.t.d.DockerClientProviderStrategy       : Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
+As no valid configuration was found, execution cannot continue.
+See https://java.testcontainers.org/on_failure.html for more details.
+[INFO] Running com.yazlab.dispatcher.RedisLoggingTest
+[WARNING] Tests run: 2, Failures: 0, Errors: 0, Skipped: 2, Time elapsed: 0 s -- in com.yazlab.dispatcher.RedisLoggingTest
+[INFO] Running com.yazlab.dispatcher.RoutingTest
+2026-04-02T00:35:36.708+03:00  INFO 6060 --- [dispatcher-test] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.yazlab.dispatcher.RoutingTest]: RoutingTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-02T00:35:36.714+03:00  INFO 6060 --- [dispatcher-test] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.yazlab.dispatcher.DispatcherApplication for test class com.yazlab.dispatcher.RoutingTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-04-02T00:35:36.758+03:00  INFO 6060 --- [dispatcher-test] [           main] com.yazlab.dispatcher.RoutingTest        : Starting RoutingTest using Java 21.0.10 with PID 6060 (started by Kerem in C:\Users\Kerem\Desktop\yaz_lab2\dispatcher)
+2026-04-02T00:35:36.758+03:00  INFO 6060 --- [dispatcher-test] [           main] com.yazlab.dispatcher.RoutingTest        : The following 1 profile is active: "test"
+2026-04-02T00:35:37.084+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=c8f26919-35ae-3f77-9cb1-9f70d5857ce5
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-04-02T00:35:37.221+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-04-02T00:35:37.300+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoint(s) beneath base path '/actuator'
+2026-04-02T00:35:37.375+03:00  INFO 6060 --- [dispatcher-test] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 51010
+2026-04-02T00:35:37.407+03:00  INFO 6060 --- [dispatcher-test] [           main] com.yazlab.dispatcher.RoutingTest        : Started RoutingTest in 0.681 seconds (process running for 7.006)
+2026-04-02T00:35:37.525+03:00 ERROR 6060 --- [dispatcher-test] [ctor-http-nio-7] a.w.r.e.AbstractErrorWebExceptionHandler : [7eb98778]  500 Server Error for HTTP GET "/dead/test"
+
+io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: getsockopt: localhost/127.0.0.1:51009
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/dead/test" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:973) ~[na:na]
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:337) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:339) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:776) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.109.Final.jar:4.1.109.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.826 s -- in com.yazlab.dispatcher.RoutingTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[WARNING] Tests run: 14, Failures: 0, Errors: 0, Skipped: 2
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.955 s
+[INFO] Finished at: 2026-04-02T00:35:40+03:00
+[INFO] ------------------------------------------------------------------------
