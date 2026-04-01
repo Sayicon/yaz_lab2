@@ -173,13 +173,14 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 - [x] **Testleri commit'le.**
 
 #### B — Uygulama
-- [ ] `micrometer-registry-prometheus` bağımlılığını ekle → Dispatcher `/actuator/prometheus` endpoint'i.
-- [ ] `prometheus.yml` scrape konfigürasyonu yaz.
-- [ ] Grafana'ya Prometheus datasource ekle; trafik dashboard'u oluştur (RPS, latency, hata oranı, servis başına istek).
-- [ ] `index.html`'i `ui/index.html` olarak projeye entegre et (Google Stitch tasarımına sadık kal — bkz. `DESIGN.md`). Grafana iframe ve log tablosunu gerçek API'ye bağla (`GET /api/logs?limit=50`).
-- [ ] UI için `ui/` klasörünü Nginx container veya Dispatcher static resource olarak sun.
-- [ ] Testleri çalıştır → `test-logs/faz-5.txt` olarak kaydet ve commit'le.
-- [ ] **AGENTS.md'yi güncelle.**
+- [x] `micrometer-registry-prometheus` bağımlılığını ekle → Dispatcher `/actuator/prometheus` endpoint'i. → `dispatcher/pom.xml`
+- [x] `prometheus.yml` scrape konfigürasyonu yaz. → `prometheus/prometheus.yml` (zaten vardı, doğrulandı)
+- [x] Grafana'ya Prometheus datasource ekle; trafik dashboard'u oluştur (RPS, latency, hata oranı, servis başına istek). → `grafana/provisioning/datasources/prometheus.yml` (uid: prometheus-ds eklendi) · `grafana/provisioning/dashboards/yazlab-dashboard.json` (4 panel: RPS, P95 latency, error rate, per-service count)
+- [x] `index.html`'i `ui/index.html` olarak projeye entegre et (Google Stitch tasarımına sadık kal). Grafana iframe ve log tablosunu gerçek API'ye bağla (`GET /api/logs?limit=50`). → `ui/index.html` · `dispatcher/.../controller/LogController.java`
+- [x] Ui da AGENTS.md ye göre gereksiz bulduğun ögeler varsa belirt. → **Not:** "Load Test Results" ve "System Info" bölümleri FAZ6'ya kadar placeholder; yapısal olarak AGENTS.md'ye tam uygun, 5 bölümün tamamı mevcut. Kaldırılacak öge yok.
+- [x] UI için `ui/` klasörünü Nginx container veya Dispatcher static resource olarak sun. → `nginx/nginx.conf` · `docker-compose.yml`'de `ui` servisi (nginx:1.25-alpine, port 80). Nginx `/api/`, `/actuator/`, `/auth/`, `/users/`, `/products/` yollarını Dispatcher'a proxy'ler.
+- [x] Testleri çalıştır → `test-logs/faz-5.txt` olarak kaydet ve commit'le. → 14 test geçti (2 skipped — RedisLoggingTest Docker gerektiriyor), BUILD SUCCESS
+- [x] **AGENTS.md'yi güncelle.**
 
 ---
 
