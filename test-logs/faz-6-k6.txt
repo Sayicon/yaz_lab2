@@ -1,0 +1,60 @@
+FAZ 6 - k6 Yük Testi Sonuçları
+===============================
+Tarih: 2026-04-02
+
+─────────────────────────────────
+FAZ 6-A: Smoke Test
+─────────────────────────────────
+Komut: k6 run k6/smoke-test.js --out json=k6/results/smoke-test.json
+Konfigürasyon: 5 VU, 10s, hata < %1, p95 < 500ms
+
+Sonuç: TÜM THRESHOLD'LAR GEÇTİ ✓
+  - http_req_failed .................: 0.00% ✓ (< %1)
+  - http_req_duration p(95) .........: < 500ms ✓
+  - create user 201 .................: %100
+  - get user 200 ....................: %100
+
+─────────────────────────────────
+FAZ 6-B: Yük Testi (4 Senaryo)
+─────────────────────────────────
+Komut: k6 run k6/load-test.js --out json=k6/results/load-test.json
+Senaryolar: load_50 | load_100 | load_200 | load_500
+
+THRESHOLD SONUÇLARI:
+  ✓ errors.........................: 0.00% < 5%
+  ✓ http_req_duration p(95)........: 15.13ms < 1000ms
+  ✓ http_req_failed................: 0.00% < 5%
+
+GENEL METRİKLER:
+  Toplam iterasyon     : 69,487
+  Toplam HTTP istek    : 277,950
+  Hata oranı           : 0.00%
+  RPS (peak)           : ~1,109 req/s
+  Ortalama yanıt süresi: ~8.5ms
+  p95 yanıt süresi     : 15.13ms
+  p99 yanıt süresi     : ~45ms
+
+SENARYO BAZINDA VU:
+  load_50  (0s-55s)   : Hedef 50  VU  — tüm istekler başarılı
+  load_100 (65s-120s) : Hedef 100 VU  — tüm istekler başarılı
+  load_200 (130s-185s): Hedef 200 VU  — tüm istekler başarılı
+  load_500 (195s-250s): Hedef 500 VU  — tüm istekler başarılı
+
+TEST EDİLEN ENDPOINT'LER:
+  POST /users          → 201 Created
+  GET  /users/{id}     → 200 OK
+  POST /products       → 201 Created
+  GET  /products/{id}  → 200 OK
+
+ÖZEL METRİKLER:
+  create_user_duration avg : ~9ms
+  get_user_duration avg    : ~7ms
+
+ÖNEMLİ NOT (Dispatcher Route Fix):
+  dispatcher/src/main/resources/application.yml'de bulunan
+  Path=/users/** ve Path=/products/** predicate'leri,
+  /users ve /products (trailing slash olmadan) endpoint'lerini
+  eşleştirmiyordu. Path=/users,/users/** ve
+  Path=/products,/products/** olarak düzeltildi.
+
+SONUÇ: FAZ 6 BAŞARILI ✓
