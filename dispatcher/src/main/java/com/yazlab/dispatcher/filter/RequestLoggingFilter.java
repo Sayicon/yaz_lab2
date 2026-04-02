@@ -1,5 +1,6 @@
 package com.yazlab.dispatcher.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -15,7 +16,7 @@ import java.time.Instant;
  * FAZ 3-B: Her istek/yanıt çifti için Redis'e log yazar.
  * Log formatı: {"timestamp":"...","method":"...","path":"...","status":200,"latency":42}
  *
- * Redis dışlandığında (test profili) bu bean oluşturulmaz.
+ * Redis dışlandığında (test profili) redisTemplate null olur, loglama atlanır.
  */
 @Component
 public class RequestLoggingFilter implements GlobalFilter, Ordered {
@@ -24,7 +25,7 @@ public class RequestLoggingFilter implements GlobalFilter, Ordered {
 
     private final ReactiveStringRedisTemplate redisTemplate;
 
-    public RequestLoggingFilter(ReactiveStringRedisTemplate redisTemplate) {
+    public RequestLoggingFilter(@Autowired(required = false) ReactiveStringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -51,9 +52,11 @@ public class RequestLoggingFilter implements GlobalFilter, Ordered {
                             + "\",\"status\":" + status
                             + ",\"latency\":" + latency + "}";
 
-                    redisTemplate.opsForList()
-                            .rightPush(LOG_KEY, logEntry)
-                            .subscribe();
+                    if (redisTemplate != null) {
+                        redisTemplate.opsForList()
+                                .rightPush(LOG_KEY, logEntry)
+                                .subscribe();
+                    }
                 });
     }
 }
