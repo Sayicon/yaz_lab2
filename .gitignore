@@ -38,3 +38,6 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# k6 large result files (> 100MB)
+k6/results/load-test.json
