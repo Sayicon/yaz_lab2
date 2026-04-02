@@ -1,6 +1,5 @@
 package com.yazlab.dispatcher.controller;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-@ConditionalOnBean(ReactiveStringRedisTemplate.class)
 public class LogController {
 
     private final ReactiveStringRedisTemplate redisTemplate;
