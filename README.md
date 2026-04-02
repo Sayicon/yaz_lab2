@@ -27,6 +27,7 @@
 11. [Docker ve Sistem Orkestrasyonu](#11-docker-ve-sistem-orkestrasyonu)
 12. [Network İzolasyonu](#12-network-i̇zolasyonu)
 13. [Sonuç ve Tartışma](#13-sonuç-ve-tartışma)
+14. [Kurulum ve Çalıştırma](#14-kurulum-ve-çalıştırma)
 
 ---
 
@@ -774,3 +775,104 @@ networks:
 - **Distributed Tracing:** Micrometer Tracing + Zipkin ile istek takibi.
 - **Redis Sentinel:** Yüksek erişilebilirlik için Redis cluster yapısı.
 - **CI/CD:** GitHub Actions ile otomatik test + Docker build pipeline.
+
+---
+
+## 14. Kurulum ve Çalıştırma
+
+### Gereksinimler
+
+| Araç | Minimum Sürüm |
+|---|---|
+| Docker | 24.x |
+| Docker Compose | 2.x (plugin) |
+| Git | herhangi |
+
+Java, Maven veya k6 **lokal kurulum gerektirmez** — tüm build ve çalıştırma işlemleri Docker içinde gerçekleşir.
+
+### 1. Repoyu Klonla
+
+```bash
+git clone https://github.com/Sayicon/yaz_lab2.git
+cd yaz_lab2
+```
+
+### 2. Sistemi Başlat
+
+```bash
+docker compose up --build -d
+```
+
+İlk çalıştırmada tüm imajlar build edilir (~3-5 dakika). Sonraki başlatmalarda:
+
+```bash
+docker compose up -d
+```
+
+### 3. Servislerin Ayakta Olduğunu Doğrula
+
+```bash
+docker compose ps
+```
+
+Tüm containerların `Up` (healthy) durumunda olması gerekir.
+
+### 4. Erişim Adresleri
+
+| Servis | Adres | Açıklama |
+|---|---|---|
+| UI Dashboard | http://localhost | Ana kontrol paneli |
+| API Gateway | http://localhost:8080 | Tüm API istekleri buradan |
+| Grafana | http://localhost:3000 | Monitoring (admin/admin) |
+| Prometheus | http://localhost:9090 | Metrik veritabanı |
+
+### 5. İlk Kullanım (API)
+
+**Kullanıcı kaydet:**
+```bash
+curl -X POST http://localhost:8080/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"demo","password":"demo123","email":"demo@test.com"}'
+```
+
+**Giriş yap ve token al:**
+```bash
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"demo","password":"demo123"}'
+```
+
+**Token ile kullanıcı oluştur:**
+```bash
+curl -X POST http://localhost:8080/users \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"ali","email":"ali@test.com","fullName":"Ali Yılmaz"}'
+```
+
+### 6. Sistemi Durdur
+
+```bash
+# Durdur (veriler korunur)
+docker compose stop
+
+# Durdur ve container'ları sil
+docker compose down
+
+# Durdur, container ve volume'ları sil (veri sıfırlanır)
+docker compose down -v
+```
+
+### 7. Yük Testini Çalıştır
+
+```bash
+# Smoke test (5 VU, 10s)
+docker run --rm -v $(pwd)/k6:/scripts \
+  grafana/k6 run /scripts/smoke-test.js
+
+# Yük testi (50/100/200/500 VU)
+docker run --rm -v $(pwd)/k6:/scripts \
+  grafana/k6 run /scripts/load-test.js
+```
+
+> **Not:** Windows'ta Git Bash veya WSL kullanın. PowerShell'de `$(pwd)` yerine `${PWD}` kullanın.
