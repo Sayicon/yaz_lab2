@@ -90,7 +90,7 @@
         <div id="status-dot" class="w-2 h-2 rounded-full bg-[#3fb950]"></div>
         <span id="status-text" class="text-[10px] font-bold text-[#8b949e] uppercase">System: Connecting...</span>
       </div>
-      <div class="ghost-border px-3 py-1 text-[10px] text-[#8b949e]">V 2.5.0-STABLE</div>
+      <div id="header-refresh" class="ghost-border px-3 py-1 text-[10px] text-[#8b949e]">— : —</div>
     </div>
   </header>
 
@@ -185,13 +185,13 @@
         <div class="bg-[#1c2026] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">MongoDB</span>
-            <span class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#3fb950]/15 text-[#3fb950] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#3fb950]"></span><span>UP</span>
+            <span id="svc-mongo" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>INTERNAL</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">27017</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">NOTE</span><span class="font-mono text-[#8b949e]">Internal Only</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">27017 ×3</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">NOTE</span><span class="font-mono text-[#8b949e]">authdb · userdb · productdb</span></div>
           </div>
         </div>
         <!-- Product -->
@@ -316,7 +316,7 @@
             <div class="text-[10px] text-[#8b949e] mb-1">Authorization: Bearer</div>
             <input id="exp-token" class="w-full bg-[#0d1117] ghost-border text-[#dfe2eb] text-xs p-2 font-mono outline-none focus:border-[#3fb950] mb-2" type="text" placeholder="JWT token (opsiyonel)"/>
             <div class="grid grid-cols-2 gap-4">
-              <div class="flex flex-col space-y-2">
+              <div id="exp-body-wrapper" class="flex flex-col space-y-2">
                 <label class="text-[10px] font-bold text-[#8b949e] uppercase">Request Body (JSON)</label>
                 <textarea id="exp-body" class="bg-[#0d1117] ghost-border text-[#3fb950] p-4 font-mono text-xs resize-none outline-none focus:border-[#3fb950] h-56">{"username":"admin","password":"admin123"}</textarea>
               </div>
@@ -442,7 +442,7 @@
 
   <footer class="p-6 border-t border-[#30363d]/40 flex justify-between items-center bg-[#0d1117]">
     <div class="text-[10px] text-[#8b949e] font-bold uppercase tracking-widest">
-      Dispatcher Console © 2025 · YazLab II · KOU BSM
+      Dispatcher Console © 2026 · YazLab II · KOU BSM
     </div>
     <div class="flex space-x-4">
       <div class="flex items-center space-x-2">
@@ -511,7 +511,9 @@
       document.getElementById('kpi-total').textContent = total;
       document.getElementById('kpi-error').textContent = errorRate + '%';
       document.getElementById('kpi-latency').textContent = avgLat + 'ms';
-      document.getElementById('log-last-update').textContent = new Date().toLocaleTimeString('tr-TR');
+      const now = new Date().toLocaleTimeString('tr-TR', { hour12: false });
+      document.getElementById('log-last-update').textContent = now;
+      document.getElementById('header-refresh').textContent = 'LAST UPDATE: ' + now;
 
       // Render table (newest first)
       const tbody = document.getElementById('log-tbody');
@@ -564,8 +566,17 @@
       document.getElementById('ping-user').textContent = allUp ? 'Internal' : 'Unknown';
       document.getElementById('ping-product').textContent = allUp ? 'Internal' : 'Unknown';
 
+      // MongoDB: internal ağda, dispatcher+redis up ise çalışıyor kabul edilir
+      const mongoEl = document.getElementById('svc-mongo');
+      if (mongoEl) {
+        const mc = allUp ? '#3fb950' : '#f85149';
+        const ml = allUp ? 'UP' : 'DOWN';
+        mongoEl.style.backgroundColor = mc + '26';
+        mongoEl.style.color = mc;
+        mongoEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full" style="background:${mc};display:inline-block;"></span><span>${ml}</span>`;
+      }
       // Active services KPI
-      const upCount = [dispUp, redisUp, allUp, allUp, allUp, true].filter(Boolean).length;
+      const upCount = [dispUp, redisUp, allUp, allUp, allUp, allUp].filter(Boolean).length;
       document.getElementById('kpi-services').textContent = `0${upCount}/06`;
 
       // Header status
@@ -589,12 +600,20 @@
     document.getElementById('exp-url').value = url;
     document.getElementById('exp-body').value = body;
     document.getElementById('exp-response').textContent = '// Sonuç burada görünecek';
+    // GET/DELETE'de body alanını gizle
+    const bodyWrapper = document.getElementById('exp-body-wrapper');
+    if (bodyWrapper) bodyWrapper.style.display = (method === 'GET' || method === 'DELETE') ? 'none' : '';
     // Active state
     document.querySelectorAll('.endpoint-btn').forEach(b => {
       b.classList.remove('border-l-2', 'border-[#3fb950]', 'bg-[#1c2026]');
     });
     btn.classList.add('border-l-2', 'border-[#3fb950]', 'bg-[#1c2026]');
   }
+
+  document.getElementById('exp-method').addEventListener('change', function() {
+    const bodyWrapper = document.getElementById('exp-body-wrapper');
+    if (bodyWrapper) bodyWrapper.style.display = (this.value === 'GET' || this.value === 'DELETE') ? 'none' : '';
+  });
 
   async function sendRequest() {
     const method = document.getElementById('exp-method').value;
