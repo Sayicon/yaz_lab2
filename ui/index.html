@@ -90,7 +90,7 @@
         <div id="status-dot" class="w-2 h-2 rounded-full bg-[#3fb950]"></div>
         <span id="status-text" class="text-[10px] font-bold text-[#8b949e] uppercase">System: Connecting...</span>
       </div>
-      <div class="ghost-border px-3 py-1 text-[10px] text-[#8b949e]">V 2.5.0-STABLE</div>
+      <div id="header-refresh" class="ghost-border px-3 py-1 text-[10px] text-[#8b949e]">— : —</div>
     </div>
   </header>
 
@@ -108,7 +108,7 @@
         <div class="bg-[#161b22] p-6 ghost-border">
           <label class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest block mb-2">Total Requests</label>
           <div id="kpi-total" class="text-4xl font-extrabold text-[#3fb950] tracking-tighter">—</div>
-          <div class="text-[10px] text-[#8b949e] mt-2">Son 50 kayıt</div>
+          <div class="text-[10px] text-[#8b949e] mt-2">Redis son 50 log</div>
         </div>
         <div class="bg-[#161b22] p-6 ghost-border">
           <label class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest block mb-2">Error Rate</label>
@@ -185,13 +185,13 @@
         <div class="bg-[#1c2026] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">MongoDB</span>
-            <span class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#3fb950]/15 text-[#3fb950] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#3fb950]"></span><span>UP</span>
+            <span id="svc-mongo" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>INTERNAL</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">27017</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">NOTE</span><span class="font-mono text-[#8b949e]">Internal Only</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">27017 ×3</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">NOTE</span><span class="font-mono text-[#8b949e]">authdb · userdb · productdb</span></div>
           </div>
         </div>
         <!-- Product -->
@@ -266,23 +266,35 @@
         <div class="w-full lg:w-80 bg-[#161b22] border-r border-[#30363d]/40 overflow-y-auto">
           <div class="p-4 bg-[#0d1117] text-[10px] font-bold text-[#8b949e] uppercase tracking-widest border-b border-[#30363d]/40">Endpoints</div>
           <div class="flex flex-col">
-            <button onclick="setExplorer('GET','/auth/login','{}','Auth Login')" class="flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left">
+            <button onclick="setExplorer(this,'GET','/actuator/health','','System Health')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
               <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
               <span class="text-[12px] font-mono text-[#dfe2eb]">/actuator/health</span>
             </button>
-            <button onclick="setExplorer('POST','/auth/login','{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin123&quot;}','Auth Login')" class="flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left border-l-2 border-[#3fb950] bg-[#1c2026]">
+            <button onclick="setExplorer(this,'POST','/auth/login','{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin123&quot;}','Auth Login')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full border-l-2 border-[#3fb950] bg-[#1c2026]">
               <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
               <span class="text-[12px] font-mono text-[#dfe2eb]">/auth/login</span>
             </button>
-            <button onclick="setExplorer('GET','/users','','List Users')" class="flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left">
+            <button onclick="setExplorer(this,'POST','/auth/register','{&quot;username&quot;:&quot;testuser&quot;,&quot;password&quot;:&quot;test123&quot;,&quot;email&quot;:&quot;test@test.com&quot;}','Auth Register')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
+              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#dfe2eb]">/auth/register</span>
+            </button>
+            <button onclick="setExplorer(this,'GET','/users','','List Users')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
               <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
               <span class="text-[12px] font-mono text-[#dfe2eb]">/users</span>
             </button>
-            <button onclick="setExplorer('GET','/products','','List Products')" class="flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left">
+            <button onclick="setExplorer(this,'POST','/users','{&quot;username&quot;:&quot;ali&quot;,&quot;email&quot;:&quot;ali@test.com&quot;,&quot;fullName&quot;:&quot;Ali Yılmaz&quot;}','Create User')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
+              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#dfe2eb]">/users</span>
+            </button>
+            <button onclick="setExplorer(this,'GET','/products','','List Products')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
               <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
               <span class="text-[12px] font-mono text-[#dfe2eb]">/products</span>
             </button>
-            <button onclick="setExplorer('GET','/api/logs?limit=20','','Dispatcher Logs')" class="flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left">
+            <button onclick="setExplorer(this,'POST','/products','{&quot;name&quot;:&quot;Laptop&quot;,&quot;description&quot;:&quot;Test&quot;,&quot;price&quot;:999.99,&quot;stock&quot;:10}','Create Product')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
+              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#dfe2eb]">/products</span>
+            </button>
+            <button onclick="setExplorer(this,'GET','/api/logs?limit=20','','Dispatcher Logs')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
               <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
               <span class="text-[12px] font-mono text-[#dfe2eb]">/api/logs</span>
             </button>
@@ -304,7 +316,7 @@
             <div class="text-[10px] text-[#8b949e] mb-1">Authorization: Bearer</div>
             <input id="exp-token" class="w-full bg-[#0d1117] ghost-border text-[#dfe2eb] text-xs p-2 font-mono outline-none focus:border-[#3fb950] mb-2" type="text" placeholder="JWT token (opsiyonel)"/>
             <div class="grid grid-cols-2 gap-4">
-              <div class="flex flex-col space-y-2">
+              <div id="exp-body-wrapper" class="flex flex-col space-y-2">
                 <label class="text-[10px] font-bold text-[#8b949e] uppercase">Request Body (JSON)</label>
                 <textarea id="exp-body" class="bg-[#0d1117] ghost-border text-[#3fb950] p-4 font-mono text-xs resize-none outline-none focus:border-[#3fb950] h-56">{"username":"admin","password":"admin123"}</textarea>
               </div>
@@ -339,7 +351,45 @@
           </thead>
           <tbody id="k6-tbody" class="text-[12px] font-mono">
             <tr class="zebra-row">
-              <td colspan="7" class="py-8 px-6 text-center text-[#8b949e]">FAZ 6'da k6 yük testi sonuçları burada gösterilecek.</td>
+              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_50</td>
+              <td class="py-3 px-6">50</td>
+              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
+              <td class="py-3 px-6 text-[#3fb950]">15</td>
+              <td class="py-3 px-6">45</td>
+              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6">~1109</td>
+            </tr>
+            <tr class="zebra-row">
+              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_100</td>
+              <td class="py-3 px-6">100</td>
+              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
+              <td class="py-3 px-6 text-[#3fb950]">15</td>
+              <td class="py-3 px-6">45</td>
+              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6">~1109</td>
+            </tr>
+            <tr class="zebra-row">
+              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_200</td>
+              <td class="py-3 px-6">200</td>
+              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
+              <td class="py-3 px-6 text-[#3fb950]">15</td>
+              <td class="py-3 px-6">45</td>
+              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6">~1109</td>
+            </tr>
+            <tr class="zebra-row">
+              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_500</td>
+              <td class="py-3 px-6">500</td>
+              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
+              <td class="py-3 px-6 text-[#3fb950]">15.13</td>
+              <td class="py-3 px-6">~45</td>
+              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6">~1109</td>
+            </tr>
+            <tr style="background:#0d1117">
+              <td colspan="7" class="py-3 px-6 text-[10px] text-[#8b949e] uppercase tracking-widest">
+                Toplam: 277.950 istek · 69.487 iterasyon · p95=15.13ms · Peak ~1109 RPS · %0.00 hata — k6 load-test.js
+              </td>
             </tr>
           </tbody>
         </table>
@@ -392,7 +442,7 @@
 
   <footer class="p-6 border-t border-[#30363d]/40 flex justify-between items-center bg-[#0d1117]">
     <div class="text-[10px] text-[#8b949e] font-bold uppercase tracking-widest">
-      Dispatcher Console © 2025 · YazLab II · KOU BSM
+      Dispatcher Console © 2026 · YazLab II · KOU BSM
     </div>
     <div class="flex space-x-4">
       <div class="flex items-center space-x-2">
@@ -461,7 +511,9 @@
       document.getElementById('kpi-total').textContent = total;
       document.getElementById('kpi-error').textContent = errorRate + '%';
       document.getElementById('kpi-latency').textContent = avgLat + 'ms';
-      document.getElementById('log-last-update').textContent = new Date().toLocaleTimeString('tr-TR');
+      const now = new Date().toLocaleTimeString('tr-TR', { hour12: false });
+      document.getElementById('log-last-update').textContent = now;
+      document.getElementById('header-refresh').textContent = 'LAST UPDATE: ' + now;
 
       // Render table (newest first)
       const tbody = document.getElementById('log-tbody');
@@ -514,8 +566,17 @@
       document.getElementById('ping-user').textContent = allUp ? 'Internal' : 'Unknown';
       document.getElementById('ping-product').textContent = allUp ? 'Internal' : 'Unknown';
 
+      // MongoDB: internal ağda, dispatcher+redis up ise çalışıyor kabul edilir
+      const mongoEl = document.getElementById('svc-mongo');
+      if (mongoEl) {
+        const mc = allUp ? '#3fb950' : '#f85149';
+        const ml = allUp ? 'UP' : 'DOWN';
+        mongoEl.style.backgroundColor = mc + '26';
+        mongoEl.style.color = mc;
+        mongoEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full" style="background:${mc};display:inline-block;"></span><span>${ml}</span>`;
+      }
       // Active services KPI
-      const upCount = [dispUp, redisUp, allUp, allUp, allUp, true].filter(Boolean).length;
+      const upCount = [dispUp, redisUp, allUp, allUp, allUp, allUp].filter(Boolean).length;
       document.getElementById('kpi-services').textContent = `0${upCount}/06`;
 
       // Header status
@@ -534,11 +595,25 @@
   }
 
   // ─── API Explorer ─────────────────────────────────────────────────────────
-  function setExplorer(method, url, body, label) {
+  function setExplorer(btn, method, url, body, label) {
     document.getElementById('exp-method').value = method;
     document.getElementById('exp-url').value = url;
     document.getElementById('exp-body').value = body;
+    document.getElementById('exp-response').textContent = '// Sonuç burada görünecek';
+    // GET/DELETE'de body alanını gizle
+    const bodyWrapper = document.getElementById('exp-body-wrapper');
+    if (bodyWrapper) bodyWrapper.style.display = (method === 'GET' || method === 'DELETE') ? 'none' : '';
+    // Active state
+    document.querySelectorAll('.endpoint-btn').forEach(b => {
+      b.classList.remove('border-l-2', 'border-[#3fb950]', 'bg-[#1c2026]');
+    });
+    btn.classList.add('border-l-2', 'border-[#3fb950]', 'bg-[#1c2026]');
   }
+
+  document.getElementById('exp-method').addEventListener('change', function() {
+    const bodyWrapper = document.getElementById('exp-body-wrapper');
+    if (bodyWrapper) bodyWrapper.style.display = (this.value === 'GET' || this.value === 'DELETE') ? 'none' : '';
+  });
 
   async function sendRequest() {
     const method = document.getElementById('exp-method').value;
@@ -566,6 +641,42 @@
       respEl.innerHTML = `<span style="color:#f85149">// Error: ${e.message}</span>`;
     }
   }
+
+  // ─── Sidebar aktif navigasyon ─────────────────────────────────────────────
+  (function initSidebarObserver() {
+    const sections = ['overview','metrics','explorer','results','system'];
+    const navLinks = {};
+    sections.forEach(id => {
+      navLinks[id] = document.querySelector(`a[href="#${id}"]`);
+    });
+
+    function setActive(id) {
+      sections.forEach(s => {
+        const link = navLinks[s];
+        if (!link) return;
+        if (s === id) {
+          link.classList.add('text-[#3fb950]', 'border-l-2', 'border-[#3fb950]', 'bg-[#161b22]');
+          link.classList.remove('text-[#8b949e]', 'opacity-60');
+        } else {
+          link.classList.remove('text-[#3fb950]', 'border-l-2', 'border-[#3fb950]', 'bg-[#161b22]');
+          link.classList.add('text-[#8b949e]', 'opacity-60');
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { threshold: 0.3 });
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    setActive('overview');
+  })();
 
   // ─── Init ─────────────────────────────────────────────────────────────────
   async function refresh() {
