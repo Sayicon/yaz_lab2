@@ -188,8 +188,8 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 **Sorumlu: Efe**
 
 #### A — Testler (önce commit'le)
-- [ ] k6 script'ini küçük yük (5 VU, 10s) ile çalıştır; hata oranı %0 olduğunu doğrula.
-- [ ] p95 < 500ms threshold'unu k6 `thresholds` ile tanımla ve test et.
+- [x] k6 script'ini küçük yük (5 VU, 10s) ile çalıştır; hata oranı %0 olduğunu doğrula. → `k6/smoke-test.js`
+- [x] p95 < 500ms threshold'unu k6 `thresholds` ile tanımla ve test et. → `k6/smoke-test.js`
 - [ ] **Testleri commit'le.**
 
 #### B — Uygulama
