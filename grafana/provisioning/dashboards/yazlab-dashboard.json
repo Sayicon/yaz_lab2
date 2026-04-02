@@ -40,13 +40,13 @@
     {
       "id": 2,
       "type": "timeseries",
-      "title": "P95 Latency (Servise G\u00f6re)",
+      "title": "Avg Latency (Servise G\u00f6re)",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
       "datasource": { "type": "prometheus", "uid": "prometheus-ds" },
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum by(le, job) (rate(http_server_requests_seconds_bucket[5m])))",
-          "legendFormat": "p95 {{job}}",
+          "expr": "sum by(job) (rate(http_server_requests_seconds_sum[1m])) / sum by(job) (rate(http_server_requests_seconds_count[1m]))",
+          "legendFormat": "avg {{job}}",
           "refId": "A"
         }
       ],

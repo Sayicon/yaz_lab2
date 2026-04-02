@@ -637,6 +637,15 @@
       try { pretty = JSON.stringify(JSON.parse(text), null, 2); } catch {}
       const color = res.status < 300 ? '#3fb950' : res.status < 500 ? '#d29922' : '#f85149';
       respEl.innerHTML = `<span style="color:${color}">// ${res.status} ${res.statusText} (${latency}ms)</span>\n${pretty}`;
+      // Login/register yanıtında token varsa otomatik doldur
+      try {
+        const parsed = JSON.parse(text);
+        if (parsed.token) {
+          document.getElementById('exp-token').value = parsed.token;
+          document.getElementById('exp-token').style.borderColor = '#3fb950';
+          setTimeout(() => document.getElementById('exp-token').style.borderColor = '', 2000);
+        }
+      } catch {}
     } catch (e) {
       respEl.innerHTML = `<span style="color:#f85149">// Error: ${e.message}</span>`;
     }

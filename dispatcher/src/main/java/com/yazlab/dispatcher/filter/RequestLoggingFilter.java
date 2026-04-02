@@ -1,6 +1,5 @@
 package com.yazlab.dispatcher.filter;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -19,7 +18,6 @@ import java.time.Instant;
  * Redis dışlandığında (test profili) bu bean oluşturulmaz.
  */
 @Component
-@ConditionalOnBean(ReactiveStringRedisTemplate.class)
 public class RequestLoggingFilter implements GlobalFilter, Ordered {
 
     public static final String LOG_KEY = "request-logs";
