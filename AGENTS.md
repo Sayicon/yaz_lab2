@@ -202,6 +202,24 @@ Mikroservisler yalnızca iç Docker ağında erişilebilir; dış dünyaya sadec
 
 ---
 
+### FAZ 6.5 — UI Hata Düzeltmeleri & İyileştirmeler
+**Sorumlu: Kerem**
+
+#### Tespit Edilen Sorunlar
+- [ ] **`/api/logs` → HTTP 404:** `@ConditionalOnBean(ReactiveStringRedisTemplate.class)` annotation'ı `@Component` üzerinde güvenilir çalışmıyor; bean scan sırasında `ReactiveStringRedisTemplate` henüz kayıtlı olmayabilir → LogController oluşturulmuyor. Fix: `@Autowired(required = false)` ile optional injection, null kontrolü.
+- [ ] **KPI kartları (Total Requests / Error Rate / Avg Latency) "—" gösteriyor:** Log API 404 döndüğü için JS tarafı veri alamıyor.
+- [ ] **API Explorer aktif buton durumu yok:** `setExplorer()` fonksiyonu çağrıldığında seçili endpoint butonu highlight olmuyor.
+- [ ] **Sidebar navigasyonu statik:** Sayfada aşağı kaydırıldığında sidebar'daki aktif item güncellemiyor.
+
+#### Yapılacaklar
+- [x] `LogController.java` → `@ConditionalOnBean` kaldır, `@Autowired(required = false)` kullan, redisTemplate null ise boş liste döndür.
+- [x] `ui/index.html` → API Explorer buton aktif state JS düzeltmesi + `/auth/register`, `POST /users`, `POST /products` endpoint'leri eklendi.
+- [x] `ui/index.html` → Sidebar IntersectionObserver ile aktif section takibi.
+- [x] Testleri çalıştır: 14/14 geçti, 2 skipped (Docker) — BUILD SUCCESS. ✓
+- [x] Commit + push.
+
+---
+
 ### FAZ 7 — Rapor & Son Kontroller
 **Sorumlu: Kerem + Efe**
 
