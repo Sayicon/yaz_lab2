@@ -47,6 +47,7 @@ services:
       - internal
     volumes:
       - mongo-auth-data:/data/db
+      - ./mongo-init/init-auth.js:/docker-entrypoint-initdb.d/init-auth.js:ro
     environment:
       MONGO_INITDB_DATABASE: authdb
 
