@@ -26,8 +26,9 @@
 10. [Monitoring ve Görselleştirme](#10-monitoring-ve-görselleştirme)
 11. [Docker ve Sistem Orkestrasyonu](#11-docker-ve-sistem-orkestrasyonu)
 12. [Network İzolasyonu](#12-network-i̇zolasyonu)
-13. [Sonuç ve Tartışma](#13-sonuç-ve-tartışma)
-14. [Kurulum ve Çalıştırma](#14-kurulum-ve-çalıştırma)
+13. [Karmaşıklık Analizi ve Literatür İncelemesi](#13-karmaşıklık-analizi-ve-literatür-i̇ncelemesi)
+14. [Sonuç ve Tartışma](#14-sonuç-ve-tartışma)
+15. [Kurulum ve Çalıştırma](#15-kurulum-ve-çalıştırma)
 
 ---
 
@@ -449,37 +450,37 @@ erDiagram
 
 ## 7. TDD Süreci
 
-Proje boyunca **Red-Green-Refactor** döngüsü uygulandı. Her fazda testler önce yazılıp commit'lendi (A), ardından uygulama geliştirildi (B).
+Proje boyunca **Red-Green-Refactor** döngüsü uygulandı. Her geliştirme adımında testler önce yazılıp commit'lendi (A), ardından uygulama geliştirildi (B).
 
 ### TDD Commit Zaman Damgaları
 
 ```mermaid
 gitGraph
-   commit id: "faz1-A: testler"
-   commit id: "faz1-B: uygulama"
+   commit id: "iskelet: testler"
+   commit id: "iskelet: uygulama"
    branch efe
-   commit id: "faz2-A: testler"
-   commit id: "faz2-B: uygulama"
+   commit id: "auth+jwt: testler"
+   commit id: "auth+jwt: uygulama"
    checkout main
    merge efe
    branch kerem
-   commit id: "faz3-A: testler"
-   commit id: "faz3-B: uygulama"
+   commit id: "gateway+log: testler"
+   commit id: "gateway+log: uygulama"
    checkout main
    merge kerem
    branch efe2
-   commit id: "faz4-A: testler"
-   commit id: "faz4-B: uygulama"
+   commit id: "user+product: testler"
+   commit id: "user+product: uygulama"
    checkout main
    merge efe2
    branch kerem2
-   commit id: "faz5-A: testler"
-   commit id: "faz5-B: uygulama"
+   commit id: "monitoring: testler"
+   commit id: "monitoring: uygulama"
    checkout main
    merge kerem2
    branch efe3
-   commit id: "faz6-A: testler"
-   commit id: "faz6-B: uygulama"
+   commit id: "yuk-testi: testler"
+   commit id: "yuk-testi: uygulama"
    checkout main
    merge efe3
 ```
@@ -503,7 +504,7 @@ gitGraph
 
 ## 8. Test Senaryoları ve Sonuçları
 
-### FAZ 1 — Proje İskeleti
+### 8.1 Servis Sağlık Testleri
 
 ```
 Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
@@ -513,7 +514,7 @@ BUILD SUCCESS
 - `HealthEndpointTest`: `/actuator/health` → 200 UP ✓
 - Docker smoke test: tüm servisler ayakta ✓
 
-### FAZ 2 — Auth Service & JWT
+### 8.2 Kimlik Doğrulama ve JWT Testleri
 
 ```
 Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
@@ -525,7 +526,7 @@ BUILD SUCCESS
 - JWT decode: geçerli payload ✓, süresi dolmuş → exception ✓
 - Dispatcher geçersiz token → 401 ✓
 
-### FAZ 3 — Dispatcher Yönlendirme & Loglama
+### 8.3 Gateway Yönlendirme ve Loglama Testleri
 
 ```
 Tests run: 10, Failures: 0, Errors: 0, Skipped: 2 (RedisLoggingTest — Docker gerektirir)
@@ -537,7 +538,7 @@ BUILD SUCCESS
 - Ulaşılamayan servis → 502/503 ✓
 - Bilinmeyen URL → 404 ✓
 
-### FAZ 4 — User & Product Service
+### 8.4 User ve Product Servis Testleri
 
 ```
 Tests run: 16, Failures: 0, Errors: 0, Skipped: 0
@@ -548,7 +549,7 @@ BUILD SUCCESS
 - Product CRUD: aynı pattern ✓
 - Embedded MongoDB (flapdoodle) ile izole test ✓
 
-### FAZ 5 — Monitoring & UI
+### 8.5 Monitoring Testleri
 
 ```
 Tests run: 14, Failures: 0, Errors: 0, Skipped: 2
@@ -652,6 +653,20 @@ Sayfalar:
 4. **Load Test Results** — k6 senaryo sonuçları tablosu
 5. **System Info** — Teknoloji yığını bilgileri
 
+### Ekran Görüntüleri
+
+**UI Dashboard — Overview**
+
+![UI Dashboard](docs/screenshots/ui-dashboard.png)
+
+> *Yukarıdaki görüntüyü almak için: sistem çalışırken `http://localhost` adresini tarayıcıda açın, tam ekran screenshot alıp `docs/screenshots/ui-dashboard.png` konumuna kaydedin.*
+
+**Grafana Dashboard**
+
+![Grafana Dashboard](docs/screenshots/grafana-dashboard.png)
+
+> *`http://localhost:3000` → Dashboards → YazLab Dashboard ekranının screenshot'ı. Kayıt: `docs/screenshots/grafana-dashboard.png`*
+
 ---
 
 ## 11. Docker ve Sistem Orkestrasyonu
@@ -747,9 +762,100 @@ networks:
     driver: bridge   # dışa açık
 ```
 
+### Ekran Görüntüleri — Network İzolasyonu
+
+**Çalışan container'lar (`docker compose ps`)**
+
+![docker compose ps](docs/screenshots/docker-compose-ps.png)
+
+> *Almak için: `docker compose ps` çıktısını terminal ekranından screenshot alın → `docs/screenshots/docker-compose-ps.png`*
+
+**Internal network detayı (`docker network inspect`)**
+
+![docker network inspect](docs/screenshots/docker-network-inspect.png)
+
+> *Almak için: `docker network inspect yaz_lab2_internal` komutunu çalıştırın, `"Internal": true` satırını gösteren çıktının screenshot'ını alın → `docs/screenshots/docker-network-inspect.png`*
+
 ---
 
-## 13. Sonuç ve Tartışma
+## 13. Karmaşıklık Analizi ve Literatür İncelemesi
+
+### 13.1 Zaman Karmaşıklığı Analizi
+
+#### JWT Doğrulama — O(1)
+
+`JwtAuthFilter`, her HTTP isteğinde Bearer token'ı JJWT kütüphanesiyle doğrular. Doğrulama işlemi yalnızca şu adımları içerir:
+
+1. Base64 decode (token boyutuyla doğrusal görünse de pratikte sabit ≤ 512 byte)
+2. HMAC-SHA256 imza kontrolü — tek hash hesabı
+3. Expiry claim karşılaştırması — O(1) integer karşılaştırma
+
+Kullanıcı sayısından **bağımsız** olarak sabit sürede tamamlanır; veritabanı sorgusu yoktur.
+
+#### Redis İşlemleri — O(1) / O(n)
+
+| İşlem | Komut | Karmaşıklık | Kullanım |
+|---|---|---|---|
+| Log yazma | `RPUSH request-logs entry` | **O(1)** | Her HTTP isteği sonrası |
+| Log okuma | `LRANGE request-logs -50 -1` | **O(n)** — n: döndürülen eleman sayısı | `/api/logs?limit=50` |
+| Routing table okuma | `HGETALL routing-table` | **O(k)** — k: servis sayısı (sabit=3) | Startup'ta bir kez |
+| Routing table yazma | `HSET routing-table key val` | **O(1)** | Startup'ta |
+
+Redis in-memory yapısı sayesinde disk I/O yoktur; tüm işlemler nanosaniye mertebesinde gerçekleşir.
+
+#### MongoDB CRUD — O(log n)
+
+MongoDB ObjectId alanı (`_id`) varsayılan olarak B-tree indeksi ile desteklidir:
+
+| İşlem | Karmaşıklık | Açıklama |
+|---|---|---|
+| `findById(id)` | **O(log n)** | `_id` B-tree indeksi üzerinden arama |
+| `save(entity)` (insert) | **O(log n)** | İndeks güncellemesi dahil |
+| `findAll()` | **O(n)** | Tam koleksiyon taraması |
+| `delete(id)` | **O(log n)** | İndeks üzerinden locate + sil |
+
+`username` alanı `unique: true` kısıtıyla ikincil indeks oluşturur; login sorgularında da O(log n) garanti edilir.
+
+#### Spring Cloud Gateway Routing — O(k)
+
+Dispatcher'da k=3 rota tanımlıdır (`/auth/**`, `/users/**`, `/products/**`). Her gelen istek bu rota listesi üzerinden sıralı prefix eşleşmesiyle değerlendirilir. k sabit olduğundan bu işlem **O(1)** olarak kabul edilebilir.
+
+### 13.2 Alan Karmaşıklığı (Space Complexity)
+
+| Bileşen | Alan Karmaşıklığı | Not |
+|---|---|---|
+| Redis `request-logs` listesi | **O(n)** — n: toplam istek sayısı | TTL veya `LTRIM` uygulanmazsa sınırsız büyür |
+| Redis `routing-table` hash'i | **O(k)** — k: servis sayısı | Sabit, startup'ta dolar |
+| MongoDB koleksiyonları | **O(m)** — m: doküman sayısı | B-tree indeksiyle +O(m log m) ek alan |
+| JVM heap (her servis) | Sabit ~256 MB | alpine JRE, `-Xmx256m` |
+
+### 13.3 Literatür İncelemesi
+
+#### Mikroservis Mimarisi
+
+**Fowler & Lewis (2014)** — *"Microservices: a definition of this new architectural term"* (martinfowler.com): Mikroservisleri "küçük, bağımsız deploy edilebilir servisler topluluğu" olarak tanımlar. Bu projede her servis (`auth`, `user`, `product`) bağımsız container'da çalışır, bağımsız veritabanı kullanır ve birbirinden izoledir — Fowler'ın tanımına tam uygundur.
+
+**Newman (2019)** — *Building Microservices* (O'Reilly): API Gateway pattern'ini merkezi giriş noktası, yetkilendirme ve loglama için önerir. Dispatcher bu mimari örüntüyü Spring Cloud Gateway üzerinde hayata geçirir.
+
+#### Richardson Olgunluk Modeli (RMM)
+
+**Richardson (2008)** — *"Justice Will Take Us Millions Of Intricate Moves"* (QCon): REST olgunluğunu 4 seviyede tanımlar. **Fowler (2010)** bu modeli *"Richardson Maturity Model"* adıyla popüler hale getirir. Proje Seviye 2'yi tam uygular: kaynak bazlı URI'ler, HTTP verb'lar (GET/POST/PUT/DELETE) ve uygun durum kodları (200/201/204/400/401/404/502).
+
+#### JWT ve Güvenlik
+
+**RFC 7519 — JSON Web Token (Jones et al., 2015)**: JWT yapısını (header.payload.signature) ve doğrulama prosedürünü tanımlar. Proje JJWT 0.12.5 kütüphanesi ile bu standardı uygular; HMAC-SHA256 imzalama, expiry claim doğrulama ve stateless (sunucu tarafı session yok) kimlik doğrulama sağlanır.
+
+#### Test Güdümlü Geliştirme (TDD)
+
+**Beck (2002)** — *Test Driven Development: By Example* (Addison-Wesley): Red-Green-Refactor döngüsünü tanımlar. **Fowler (2005)** ise test sırasını şöyle özetler: "önce başarısız test yaz, sonra geçir, ardından temizle." Bu projede 6 faz boyunca her test commit'i (A) uygulama commit'inden (B) önce gelmiştir; git log zaman damgaları bunu kanıtlar.
+
+#### Reaktif Programlama
+
+**Odersky, Spoon & Venners (2019)** — *Programming in Scala*; **Reactive Manifesto (2014)** (reactivemanifesto.org): Yanıt verebilirlik, dayanıklılık, esneklik ve mesaj tabanlı iletişim prensipleri. Spring WebFlux + Project Reactor, bu prensipleri JVM üzerinde non-blocking I/O ile uygular; dispatcher bu sayede 500 eş zamanlı kullanıcıya p95=15ms ile yanıt verir.
+
+---
+
+## 14. Sonuç ve Tartışma
 
 ### Başarılar
 
@@ -778,7 +884,7 @@ networks:
 
 ---
 
-## 14. Kurulum ve Çalıştırma
+## 15. Kurulum ve Çalıştırma
 
 ### Gereksinimler
 

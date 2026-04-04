@@ -217,13 +217,12 @@
         <span class="text-[10px] text-[#8b949e] uppercase tracking-widest">Grafana · Prometheus</span>
       </div>
       <!-- Grafana iframe -->
-      <div class="w-full ghost-border overflow-hidden" style="height:450px;">
+      <div class="w-full ghost-border overflow-hidden">
         <iframe
           src="http://localhost:3000/d/yazlab-main?orgId=1&refresh=5s&theme=dark&kiosk"
-          width="100%"
-          height="450"
           frameborder="0"
-          style="background:#0d1117;"
+          scrolling="no"
+          style="width:100%;height:clamp(455px,49vw,630px);display:block;background:#0d1117;"
           title="YazLab II Grafana Dashboard">
         </iframe>
       </div>
@@ -233,10 +232,10 @@
           <div class="text-sm font-bold uppercase tracking-widest text-[#8b949e]">Ingress Traffic Log</div>
           <div class="text-[10px] text-[#8b949e]">Auto-refresh 10s · <span id="log-last-update">—</span></div>
         </div>
-        <div class="overflow-hidden ghost-border">
+        <div class="ghost-border overflow-hidden">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="bg-[#0d1117] text-[11px] font-bold uppercase tracking-widest text-[#8b949e]">
+              <tr class="bg-[#0d1117] text-[11px] font-bold uppercase tracking-widest text-[#8b949e] sticky top-0 z-10">
                 <th class="py-4 px-6">TIMESTAMP</th>
                 <th class="py-4 px-6">METHOD</th>
                 <th class="py-4 px-6">PATH</th>
@@ -245,12 +244,16 @@
                 <th class="py-4 px-6">SERVICE</th>
               </tr>
             </thead>
-            <tbody id="log-tbody" class="text-[12px]">
-              <tr class="zebra-row">
-                <td colspan="6" class="py-8 px-6 text-center text-[#8b949e] font-mono">Yükleniyor...</td>
-              </tr>
-            </tbody>
           </table>
+          <div style="max-height:400px;overflow-y:auto;">
+            <table class="w-full text-left border-collapse">
+              <tbody id="log-tbody" class="text-[12px]">
+                <tr class="zebra-row">
+                  <td colspan="6" class="py-8 px-6 text-center text-[#8b949e] font-mono">Yükleniyor...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
@@ -497,7 +500,9 @@
   // ─── Log table ────────────────────────────────────────────────────────────
   async function refreshLogs() {
     try {
-      const res = await fetch('/api/logs?limit=50');
+      const token = document.getElementById('exp-token')?.value.trim() || systemToken;
+      const logHeaders = token ? { 'Authorization': 'Bearer ' + token } : {};
+      const res = await fetch('/api/logs?limit=50', { headers: logHeaders });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const rawList = await res.json();
       const logs = rawList.map(s => { try { return JSON.parse(s); } catch { return null; } }).filter(Boolean);
@@ -508,7 +513,7 @@
       const errorRate = total > 0 ? (errors / total * 100).toFixed(1) : '0.0';
       const avgLat = total > 0 ? Math.round(logs.reduce((a, l) => a + (l.latency || 0), 0) / total) : 0;
 
-      document.getElementById('kpi-total').textContent = total;
+      document.getElementById('kpi-total').textContent = total >= 50 ? '50+' : total;
       document.getElementById('kpi-error').textContent = errorRate + '%';
       document.getElementById('kpi-latency').textContent = avgLat + 'ms';
       const now = new Date().toLocaleTimeString('tr-TR', { hour12: false });
@@ -687,8 +692,30 @@
     setActive('overview');
   })();
 
+  // ─── Auto-login (sistem token'ı) ─────────────────────────────────────────
+  let systemToken = null;
+
+  async function ensureToken() {
+    if (systemToken) return systemToken;
+    try {
+      const r = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: 'admin', password: 'admin123' })
+      });
+      if (r.ok) {
+        const data = await r.json();
+        systemToken = data.token;
+        const tokenInput = document.getElementById('exp-token');
+        if (tokenInput && !tokenInput.value) tokenInput.value = systemToken;
+      }
+    } catch {}
+    return systemToken;
+  }
+
   // ─── Init ─────────────────────────────────────────────────────────────────
   async function refresh() {
+    await ensureToken();
     await Promise.all([refreshLogs(), refreshHealth()]);
   }
 
