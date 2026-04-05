@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>THE KINETIC CONSOLE</title>
+<title>YazLab II — Dispatcher</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -13,22 +13,22 @@
     theme: {
       extend: {
         colors: {
-          "surface": "#10141a",
-          "outline": "#879484",
-          "outline-variant": "#3e4a3c",
-          "on-surface-variant": "#bdcab8",
-          "primary": "#3fb950",
-          "primary-container": "#3fb950",
-          "error": "#f85149",
-          "secondary": "#fabc45",
-          "background": "#10141a",
-          "surface-container-low": "#181c22",
-          "surface-container": "#1c2026",
-          "surface-container-high": "#262a31",
-          "surface-container-highest": "#31353c",
-          "surface-container-lowest": "#0d1117",
-          "on-surface": "#dfe2eb",
-          "on-background": "#dfe2eb",
+          "surface": "#F6F1EC",
+          "outline": "#B89880",
+          "outline-variant": "#C8B49A",
+          "on-surface-variant": "#6B5240",
+          "primary": "#DA7958",
+          "primary-container": "#DA7958",
+          "error": "#c45248",
+          "secondary": "#c99540",
+          "background": "#F6F1EC",
+          "surface-container-low": "#F0EAE3",
+          "surface-container": "#E8E2DB",
+          "surface-container-high": "#DDD3C6",
+          "surface-container-highest": "#C8B49A",
+          "surface-container-lowest": "#F6F1EC",
+          "on-surface": "#2A1A0E",
+          "on-background": "#2A1A0E",
         },
         fontFamily: {
           "headline": ["JetBrains Mono"],
@@ -41,37 +41,37 @@
   }
 </script>
 <style>
-  body { font-family: 'JetBrains Mono', monospace; background-color: #0d1117; color: #dfe2eb; min-height: max(884px, 100dvh); }
+  body { font-family: 'JetBrains Mono', monospace; background-color: #F6F1EC; color: #2A1A0E; min-height: max(884px, 100dvh); }
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-  .ghost-border { border: 1px solid rgba(135, 148, 132, 0.4); }
+  .ghost-border { border: 1px solid rgba(180, 140, 100, 0.45); }
   .no-scrollbar::-webkit-scrollbar { display: none; }
-  .zebra-row:nth-child(even) { background-color: #161b22; }
-  .zebra-row:nth-child(odd) { background-color: #1c2026; }
+  .zebra-row:nth-child(even) { background-color: #EDE8E2; }
+  .zebra-row:nth-child(odd) { background-color: #E8E2DB; }
 </style>
 </head>
 <body class="flex min-h-screen">
 
 <!-- Sidebar Navigation -->
-<nav class="fixed left-0 h-full w-20 flex flex-col items-center py-4 space-y-8 bg-[#0d1117] border-r border-[#30363d]/40 z-[60]">
-  <div class="text-[#3fb950] font-black text-xl tracking-tighter">KINETIC</div>
+<nav class="fixed left-0 h-full w-20 flex flex-col items-center py-4 space-y-8 bg-[#F6F1EC] border-r border-[#C8B49A]/40 z-[60]">
+  <div class="text-[#DA7958] font-black text-xl tracking-tighter">YL II</div>
   <div class="flex flex-col items-center w-full space-y-2">
-    <a class="flex flex-col items-center justify-center w-full py-4 text-[#3fb950] border-l-2 border-[#3fb950] bg-[#161b22] hover:bg-[#1c2026] hover:text-[#3fb950] transition-colors" href="#overview">
+    <a class="flex flex-col items-center justify-center w-full py-4 text-[#DA7958] border-l-2 border-[#DA7958] bg-[#EDE8E2] hover:bg-[#E8E2DB] hover:text-[#DA7958] transition-colors" href="#overview">
       <span class="material-symbols-outlined">dashboard</span>
       <span class="text-[9px] font-bold mt-1 uppercase tracking-widest">OVERVIEW</span>
     </a>
-    <a class="flex flex-col items-center justify-center w-full py-4 text-[#8b949e] opacity-60 hover:opacity-100 hover:bg-[#1c2026] hover:text-[#3fb950] transition-colors" href="#metrics">
+    <a class="flex flex-col items-center justify-center w-full py-4 text-[#6B5240] opacity-60 hover:opacity-100 hover:bg-[#E8E2DB] hover:text-[#DA7958] transition-colors" href="#metrics">
       <span class="material-symbols-outlined">analytics</span>
       <span class="text-[9px] font-bold mt-1 uppercase tracking-widest">METRICS</span>
     </a>
-    <a class="flex flex-col items-center justify-center w-full py-4 text-[#8b949e] opacity-60 hover:opacity-100 hover:bg-[#1c2026] hover:text-[#3fb950] transition-colors" href="#explorer">
+    <a class="flex flex-col items-center justify-center w-full py-4 text-[#6B5240] opacity-60 hover:opacity-100 hover:bg-[#E8E2DB] hover:text-[#DA7958] transition-colors" href="#explorer">
       <span class="material-symbols-outlined">api</span>
       <span class="text-[9px] font-bold mt-1 uppercase tracking-widest">EXPLORER</span>
     </a>
-    <a class="flex flex-col items-center justify-center w-full py-4 text-[#8b949e] opacity-60 hover:opacity-100 hover:bg-[#1c2026] hover:text-[#3fb950] transition-colors" href="#results">
+    <a class="flex flex-col items-center justify-center w-full py-4 text-[#6B5240] opacity-60 hover:opacity-100 hover:bg-[#E8E2DB] hover:text-[#DA7958] transition-colors" href="#results">
       <span class="material-symbols-outlined">speed</span>
       <span class="text-[9px] font-bold mt-1 uppercase tracking-widest">RESULTS</span>
     </a>
-    <a class="flex flex-col items-center justify-center w-full py-4 text-[#8b949e] opacity-60 hover:opacity-100 hover:bg-[#1c2026] hover:text-[#3fb950] transition-colors" href="#system">
+    <a class="flex flex-col items-center justify-center w-full py-4 text-[#6B5240] opacity-60 hover:opacity-100 hover:bg-[#E8E2DB] hover:text-[#DA7958] transition-colors" href="#system">
       <span class="material-symbols-outlined">info</span>
       <span class="text-[9px] font-bold mt-1 uppercase tracking-widest">SYSTEM</span>
     </a>
@@ -80,17 +80,17 @@
 
 <main class="flex-1 ml-20 flex flex-col">
   <!-- Top Bar -->
-  <header class="flex items-center justify-between px-6 h-14 w-full z-50 bg-[#161b22] border-b border-[#30363d]/40 sticky top-0">
+  <header class="flex items-center justify-between px-6 h-14 w-full z-50 bg-[#EDE8E2] border-b border-[#C8B49A]/40 sticky top-0">
     <div class="flex items-center space-x-3">
-      <span class="material-symbols-outlined text-[#3fb950]">terminal</span>
-      <h1 class="font-['JetBrains_Mono'] font-bold tracking-tight uppercase text-[#3fb950]">YAZLAB II — DISPATCHER DASHBOARD</h1>
+      <span class="material-symbols-outlined text-[#DA7958]">terminal</span>
+      <h1 class="font-['JetBrains_Mono'] font-bold tracking-tight uppercase text-[#DA7958]">YAZLAB II — DASHBOARD</h1>
     </div>
     <div class="flex items-center space-x-6">
       <div class="flex items-center space-x-2">
-        <div id="status-dot" class="w-2 h-2 rounded-full bg-[#3fb950]"></div>
-        <span id="status-text" class="text-[10px] font-bold text-[#8b949e] uppercase">System: Connecting...</span>
+        <div id="status-dot" class="w-2 h-2 rounded-full bg-[#DA7958]"></div>
+        <span id="status-text" class="text-[10px] font-bold text-[#6B5240] uppercase">System: Connecting...</span>
       </div>
-      <div id="header-refresh" class="ghost-border px-3 py-1 text-[10px] text-[#8b949e]">— : —</div>
+      <div id="header-refresh" class="ghost-border px-3 py-1 text-[10px] text-[#6B5240]">— : —</div>
     </div>
   </header>
 
@@ -98,113 +98,113 @@
 
     <!-- SECTION 1: OVERVIEW -->
     <section class="space-y-8" id="overview">
-      <div class="flex items-end justify-between border-b border-[#30363d]/40 pb-4">
-        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#dfe2eb]">OVERVIEW</h2>
-        <span class="text-[10px] text-[#8b949e] uppercase tracking-widest">Real-time Node Health</span>
+      <div class="flex items-end justify-between border-b border-[#C8B49A]/40 pb-4">
+        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#2A1A0E]">OVERVIEW</h2>
+        <span class="text-[10px] text-[#6B5240] uppercase tracking-widest">Real-time Node Health</span>
       </div>
 
       <!-- KPI Grid -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="bg-[#161b22] p-6 ghost-border">
-          <label class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest block mb-2">Total Requests</label>
-          <div id="kpi-total" class="text-4xl font-extrabold text-[#3fb950] tracking-tighter">—</div>
-          <div class="text-[10px] text-[#8b949e] mt-2">Redis son 50 log</div>
+        <div class="bg-[#EDE8E2] p-6 ghost-border">
+          <label class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest block mb-2">Total Requests</label>
+          <div id="kpi-total" class="text-4xl font-extrabold text-[#DA7958] tracking-tighter">—</div>
+          <div class="text-[10px] text-[#6B5240] mt-2">Redis son 50 log</div>
         </div>
-        <div class="bg-[#161b22] p-6 ghost-border">
-          <label class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest block mb-2">Error Rate</label>
-          <div id="kpi-error" class="text-4xl font-extrabold text-[#f85149] tracking-tighter">—</div>
-          <div class="text-[10px] text-[#8b949e] mt-2">HTTP 4xx/5xx</div>
+        <div class="bg-[#EDE8E2] p-6 ghost-border">
+          <label class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest block mb-2">Error Rate</label>
+          <div id="kpi-error" class="text-4xl font-extrabold text-[#c45248] tracking-tighter">—</div>
+          <div class="text-[10px] text-[#6B5240] mt-2">HTTP 4xx/5xx</div>
         </div>
-        <div class="bg-[#161b22] p-6 ghost-border">
-          <label class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest block mb-2">Avg Latency</label>
-          <div id="kpi-latency" class="text-4xl font-extrabold text-[#d29922] tracking-tighter">—</div>
-          <div class="text-[10px] text-[#8b949e] mt-2">Ort. yanıt süresi</div>
+        <div class="bg-[#EDE8E2] p-6 ghost-border">
+          <label class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest block mb-2">Avg Latency</label>
+          <div id="kpi-latency" class="text-4xl font-extrabold text-[#c99540] tracking-tighter">—</div>
+          <div class="text-[10px] text-[#6B5240] mt-2">Ort. yanıt süresi</div>
         </div>
-        <div class="bg-[#161b22] p-6 ghost-border">
-          <label class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest block mb-2">Active Services</label>
-          <div id="kpi-services" class="text-4xl font-extrabold text-[#3fb950] tracking-tighter">—</div>
-          <div class="text-[10px] text-[#8b949e] mt-2">Actuator health</div>
+        <div class="bg-[#EDE8E2] p-6 ghost-border">
+          <label class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest block mb-2">Active Services</label>
+          <div id="kpi-services" class="text-4xl font-extrabold text-[#DA7958] tracking-tighter">—</div>
+          <div class="text-[10px] text-[#6B5240] mt-2">Actuator health</div>
         </div>
       </div>
 
       <!-- Service Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
         <!-- Dispatcher -->
-        <div class="bg-[#1c2026] p-5 flex flex-col justify-between h-40">
+        <div class="bg-[#E8E2DB] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">Dispatcher</span>
-            <span id="svc-dispatcher" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>CHECK</span>
+            <span id="svc-dispatcher" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#6B5240]/15 text-[#6B5240] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#6B5240]"></span><span>CHECK</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">8080</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">LAST PING</span><span id="ping-dispatcher" class="font-mono text-[#8b949e]">—</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">PORT</span><span class="font-mono">8080</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">LAST PING</span><span id="ping-dispatcher" class="font-mono text-[#6B5240]">—</span></div>
           </div>
         </div>
         <!-- Auth -->
-        <div class="bg-[#161b22] p-5 flex flex-col justify-between h-40">
+        <div class="bg-[#EDE8E2] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">Auth</span>
-            <span id="svc-auth" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>CHECK</span>
+            <span id="svc-auth" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#6B5240]/15 text-[#6B5240] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#6B5240]"></span><span>CHECK</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">8081</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">LAST PING</span><span id="ping-auth" class="font-mono text-[#8b949e]">—</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">PORT</span><span class="font-mono">8081</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">LAST PING</span><span id="ping-auth" class="font-mono text-[#6B5240]">—</span></div>
           </div>
         </div>
         <!-- User -->
-        <div class="bg-[#1c2026] p-5 flex flex-col justify-between h-40">
+        <div class="bg-[#E8E2DB] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">User</span>
-            <span id="svc-user" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>CHECK</span>
+            <span id="svc-user" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#6B5240]/15 text-[#6B5240] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#6B5240]"></span><span>CHECK</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">8082</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">LAST PING</span><span id="ping-user" class="font-mono text-[#8b949e]">—</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">PORT</span><span class="font-mono">8082</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">LAST PING</span><span id="ping-user" class="font-mono text-[#6B5240]">—</span></div>
           </div>
         </div>
         <!-- Redis -->
-        <div class="bg-[#161b22] p-5 flex flex-col justify-between h-40">
+        <div class="bg-[#EDE8E2] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">Redis</span>
-            <span id="svc-redis" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>CHECK</span>
+            <span id="svc-redis" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#6B5240]/15 text-[#6B5240] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#6B5240]"></span><span>CHECK</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">6379</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">LAST PING</span><span id="ping-redis" class="font-mono text-[#8b949e]">—</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">PORT</span><span class="font-mono">6379</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">LAST PING</span><span id="ping-redis" class="font-mono text-[#6B5240]">—</span></div>
           </div>
         </div>
         <!-- MongoDB -->
-        <div class="bg-[#1c2026] p-5 flex flex-col justify-between h-40">
+        <div class="bg-[#E8E2DB] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">MongoDB</span>
-            <span id="svc-mongo" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>INTERNAL</span>
+            <span id="svc-mongo" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#6B5240]/15 text-[#6B5240] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#6B5240]"></span><span>INTERNAL</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">27017 ×3</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">NOTE</span><span class="font-mono text-[#8b949e]">authdb · userdb · productdb</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">PORT</span><span class="font-mono">27017 ×3</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">NOTE</span><span class="font-mono text-[#6B5240]">authdb · userdb · productdb</span></div>
           </div>
         </div>
         <!-- Product -->
-        <div class="bg-[#161b22] p-5 flex flex-col justify-between h-40">
+        <div class="bg-[#EDE8E2] p-5 flex flex-col justify-between h-40">
           <div class="flex justify-between items-start">
             <span class="text-lg font-bold tracking-tight">Product</span>
-            <span id="svc-product" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#8b949e]/15 text-[#8b949e] text-[10px] font-bold uppercase rounded-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#8b949e]"></span><span>CHECK</span>
+            <span id="svc-product" class="flex items-center space-x-1.5 px-2 py-0.5 bg-[#6B5240]/15 text-[#6B5240] text-[10px] font-bold uppercase rounded-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#6B5240]"></span><span>CHECK</span>
             </span>
           </div>
           <div class="space-y-1">
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">PORT</span><span class="font-mono">8083</span></div>
-            <div class="flex justify-between text-[11px]"><span class="text-[#8b949e]">LAST PING</span><span id="ping-product" class="font-mono text-[#8b949e]">—</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">PORT</span><span class="font-mono">8083</span></div>
+            <div class="flex justify-between text-[11px]"><span class="text-[#6B5240]">LAST PING</span><span id="ping-product" class="font-mono text-[#6B5240]">—</span></div>
           </div>
         </div>
       </div>
@@ -212,30 +212,30 @@
 
     <!-- SECTION 2: LIVE METRICS -->
     <section class="space-y-8" id="metrics">
-      <div class="flex items-end justify-between border-b border-[#30363d]/40 pb-4">
-        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#dfe2eb]">LIVE METRICS</h2>
-        <span class="text-[10px] text-[#8b949e] uppercase tracking-widest">Grafana · Prometheus</span>
+      <div class="flex items-end justify-between border-b border-[#C8B49A]/40 pb-4">
+        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#2A1A0E]">LIVE METRICS</h2>
+        <span class="text-[10px] text-[#6B5240] uppercase tracking-widest">Grafana · Prometheus</span>
       </div>
       <!-- Grafana iframe -->
       <div class="w-full ghost-border overflow-hidden">
         <iframe
-          src="http://localhost:3000/d/yazlab-main?orgId=1&refresh=5s&theme=dark&kiosk"
+          src="http://localhost:3000/d/yazlab-main?orgId=1&refresh=5s&theme=light&kiosk"
           frameborder="0"
           scrolling="no"
-          style="width:100%;height:clamp(455px,49vw,630px);display:block;background:#0d1117;"
+          style="width:100%;height:clamp(455px,49vw,630px);display:block;background:#F6F1EC;"
           title="YazLab II Grafana Dashboard">
         </iframe>
       </div>
       <!-- Request Log Table -->
       <div class="space-y-4">
         <div class="flex items-center justify-between">
-          <div class="text-sm font-bold uppercase tracking-widest text-[#8b949e]">Ingress Traffic Log</div>
-          <div class="text-[10px] text-[#8b949e]">Auto-refresh 10s · <span id="log-last-update">—</span></div>
+          <div class="text-sm font-bold uppercase tracking-widest text-[#6B5240]">Ingress Traffic Log</div>
+          <div class="text-[10px] text-[#6B5240]">Auto-refresh 10s · <span id="log-last-update">—</span></div>
         </div>
         <div class="ghost-border overflow-hidden">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="bg-[#0d1117] text-[11px] font-bold uppercase tracking-widest text-[#8b949e] sticky top-0 z-10">
+              <tr class="bg-[#F6F1EC] text-[11px] font-bold uppercase tracking-widest text-[#6B5240] sticky top-0 z-10">
                 <th class="py-4 px-6">TIMESTAMP</th>
                 <th class="py-4 px-6">METHOD</th>
                 <th class="py-4 px-6">PATH</th>
@@ -249,7 +249,7 @@
             <table class="w-full text-left border-collapse">
               <tbody id="log-tbody" class="text-[12px]">
                 <tr class="zebra-row">
-                  <td colspan="6" class="py-8 px-6 text-center text-[#8b949e] font-mono">Yükleniyor...</td>
+                  <td colspan="6" class="py-8 px-6 text-center text-[#6B5240] font-mono">Yükleniyor...</td>
                 </tr>
               </tbody>
             </table>
@@ -260,72 +260,72 @@
 
     <!-- SECTION 3: API EXPLORER -->
     <section class="space-y-8" id="explorer">
-      <div class="flex items-end justify-between border-b border-[#30363d]/40 pb-4">
-        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#dfe2eb]">API EXPLORER</h2>
-        <span class="text-[10px] text-[#8b949e] uppercase tracking-widest">Interface Debugger</span>
+      <div class="flex items-end justify-between border-b border-[#C8B49A]/40 pb-4">
+        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#2A1A0E]">API EXPLORER</h2>
+        <span class="text-[10px] text-[#6B5240] uppercase tracking-widest">Interface Debugger</span>
       </div>
       <div class="flex flex-col lg:flex-row gap-0 ghost-border h-[600px]">
         <!-- Endpoint List -->
-        <div class="w-full lg:w-80 bg-[#161b22] border-r border-[#30363d]/40 overflow-y-auto">
-          <div class="p-4 bg-[#0d1117] text-[10px] font-bold text-[#8b949e] uppercase tracking-widest border-b border-[#30363d]/40">Endpoints</div>
+        <div class="w-full lg:w-80 bg-[#EDE8E2] border-r border-[#C8B49A]/40 overflow-y-auto">
+          <div class="p-4 bg-[#F6F1EC] text-[10px] font-bold text-[#6B5240] uppercase tracking-widest border-b border-[#C8B49A]/40">Endpoints</div>
           <div class="flex flex-col">
-            <button onclick="setExplorer(this,'GET','/actuator/health','','System Health')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/actuator/health</span>
+            <button onclick="setExplorer(this,'GET','/actuator/health','','System Health')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#DA7958] w-8">GET</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/actuator/health</span>
             </button>
-            <button onclick="setExplorer(this,'POST','/auth/login','{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin123&quot;}','Auth Login')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full border-l-2 border-[#3fb950] bg-[#1c2026]">
-              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/auth/login</span>
+            <button onclick="setExplorer(this,'POST','/auth/login','{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;admin123&quot;}','Auth Login')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full border-l-2 border-[#DA7958] bg-[#E8E2DB]">
+              <span class="text-[10px] font-black text-[#c99540] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/auth/login</span>
             </button>
-            <button onclick="setExplorer(this,'POST','/auth/register','{&quot;username&quot;:&quot;testuser&quot;,&quot;password&quot;:&quot;test123&quot;,&quot;email&quot;:&quot;test@test.com&quot;}','Auth Register')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/auth/register</span>
+            <button onclick="setExplorer(this,'POST','/auth/register','{&quot;username&quot;:&quot;testuser&quot;,&quot;password&quot;:&quot;test123&quot;,&quot;email&quot;:&quot;test@test.com&quot;}','Auth Register')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#c99540] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/auth/register</span>
             </button>
-            <button onclick="setExplorer(this,'GET','/users','','List Users')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/users</span>
+            <button onclick="setExplorer(this,'GET','/users','','List Users')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#DA7958] w-8">GET</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/users</span>
             </button>
-            <button onclick="setExplorer(this,'POST','/users','{&quot;username&quot;:&quot;ali&quot;,&quot;email&quot;:&quot;ali@test.com&quot;,&quot;fullName&quot;:&quot;Ali Yılmaz&quot;}','Create User')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/users</span>
+            <button onclick="setExplorer(this,'POST','/users','{&quot;username&quot;:&quot;ali&quot;,&quot;email&quot;:&quot;ali@test.com&quot;,&quot;fullName&quot;:&quot;Ali Yılmaz&quot;}','Create User')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#c99540] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/users</span>
             </button>
-            <button onclick="setExplorer(this,'GET','/products','','List Products')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/products</span>
+            <button onclick="setExplorer(this,'GET','/products','','List Products')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#DA7958] w-8">GET</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/products</span>
             </button>
-            <button onclick="setExplorer(this,'POST','/products','{&quot;name&quot;:&quot;Laptop&quot;,&quot;description&quot;:&quot;Test&quot;,&quot;price&quot;:999.99,&quot;stock&quot;:10}','Create Product')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#d29922] w-8">POST</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/products</span>
+            <button onclick="setExplorer(this,'POST','/products','{&quot;name&quot;:&quot;Laptop&quot;,&quot;description&quot;:&quot;Test&quot;,&quot;price&quot;:999.99,&quot;stock&quot;:10}','Create Product')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#c99540] w-8">POST</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/products</span>
             </button>
-            <button onclick="setExplorer(this,'GET','/api/logs?limit=20','','Dispatcher Logs')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#1c2026] text-left w-full">
-              <span class="text-[10px] font-black text-[#3fb950] w-8">GET</span>
-              <span class="text-[12px] font-mono text-[#dfe2eb]">/api/logs</span>
+            <button onclick="setExplorer(this,'GET','/api/logs?limit=20','','Dispatcher Logs')" class="endpoint-btn flex items-center space-x-3 p-4 hover:bg-[#E8E2DB] text-left w-full">
+              <span class="text-[10px] font-black text-[#DA7958] w-8">GET</span>
+              <span class="text-[12px] font-mono text-[#2A1A0E]">/api/logs</span>
             </button>
           </div>
         </div>
         <!-- Request/Response Builder -->
-        <div class="flex-1 bg-[#10141a] flex flex-col">
+        <div class="flex-1 bg-[#F6F1EC] flex flex-col">
           <div class="p-6 space-y-6">
             <div class="flex space-x-2">
-              <select id="exp-method" class="bg-[#0d1117] ghost-border text-[#dfe2eb] text-sm p-3 font-mono outline-none focus:border-[#3fb950]">
+              <select id="exp-method" class="bg-[#F6F1EC] ghost-border text-[#2A1A0E] text-sm p-3 font-mono outline-none focus:border-[#DA7958]">
                 <option>GET</option>
                 <option selected>POST</option>
                 <option>PUT</option>
                 <option>DELETE</option>
               </select>
-              <input id="exp-url" class="flex-1 bg-[#0d1117] ghost-border text-[#dfe2eb] text-sm p-3 font-mono outline-none focus:border-[#3fb950]" type="text" value="/auth/login"/>
-              <button onclick="sendRequest()" class="bg-[#3fb950] text-[#002105] font-black px-8 uppercase text-xs tracking-widest hover:brightness-110 active:scale-95 transition-all">SEND</button>
+              <input id="exp-url" class="flex-1 bg-[#F6F1EC] ghost-border text-[#2A1A0E] text-sm p-3 font-mono outline-none focus:border-[#DA7958]" type="text" value="/auth/login"/>
+              <button onclick="sendRequest()" class="bg-[#DA7958] text-[#1a0c04] font-black px-8 uppercase text-xs tracking-widest hover:brightness-110 active:scale-95 transition-all">SEND</button>
             </div>
-            <div class="text-[10px] text-[#8b949e] mb-1">Authorization: Bearer</div>
-            <input id="exp-token" class="w-full bg-[#0d1117] ghost-border text-[#dfe2eb] text-xs p-2 font-mono outline-none focus:border-[#3fb950] mb-2" type="text" placeholder="JWT token (opsiyonel)"/>
+            <div class="text-[10px] text-[#6B5240] mb-1">Authorization: Bearer</div>
+            <input id="exp-token" class="w-full bg-[#F6F1EC] ghost-border text-[#2A1A0E] text-xs p-2 font-mono outline-none focus:border-[#DA7958] mb-2" type="text" placeholder="JWT token (opsiyonel)"/>
             <div class="grid grid-cols-2 gap-4">
               <div id="exp-body-wrapper" class="flex flex-col space-y-2">
-                <label class="text-[10px] font-bold text-[#8b949e] uppercase">Request Body (JSON)</label>
-                <textarea id="exp-body" class="bg-[#0d1117] ghost-border text-[#3fb950] p-4 font-mono text-xs resize-none outline-none focus:border-[#3fb950] h-56">{"username":"admin","password":"admin123"}</textarea>
+                <label class="text-[10px] font-bold text-[#6B5240] uppercase">Request Body (JSON)</label>
+                <textarea id="exp-body" class="bg-[#F6F1EC] ghost-border text-[#DA7958] p-4 font-mono text-xs resize-none outline-none focus:border-[#DA7958] h-56">{"username":"admin","password":"admin123"}</textarea>
               </div>
               <div class="flex flex-col space-y-2">
-                <label class="text-[10px] font-bold text-[#8b949e] uppercase">Response Output</label>
-                <div id="exp-response" class="bg-[#161b22] ghost-border p-4 font-mono text-xs text-[#8b949e] overflow-auto h-56">// Sonuç burada görünecek</div>
+                <label class="text-[10px] font-bold text-[#6B5240] uppercase">Response Output</label>
+                <div id="exp-response" class="bg-[#EDE8E2] ghost-border p-4 font-mono text-xs text-[#6B5240] overflow-auto h-56">// Sonuç burada görünecek</div>
               </div>
             </div>
           </div>
@@ -335,14 +335,14 @@
 
     <!-- SECTION 4: LOAD TEST RESULTS -->
     <section class="space-y-8" id="results">
-      <div class="flex items-end justify-between border-b border-[#30363d]/40 pb-4">
-        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#dfe2eb]">LOAD TEST RESULTS</h2>
-        <span class="text-[10px] text-[#8b949e] uppercase tracking-widest">k6 · Stress Benchmarks</span>
+      <div class="flex items-end justify-between border-b border-[#C8B49A]/40 pb-4">
+        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#2A1A0E]">LOAD TEST RESULTS</h2>
+        <span class="text-[10px] text-[#6B5240] uppercase tracking-widest">k6 · Stress Benchmarks</span>
       </div>
       <div class="overflow-hidden ghost-border">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="bg-[#0d1117] text-[11px] font-bold uppercase tracking-widest text-[#8b949e]">
+            <tr class="bg-[#F6F1EC] text-[11px] font-bold uppercase tracking-widest text-[#6B5240]">
               <th class="py-4 px-6">SCENARIO</th>
               <th class="py-4 px-6">VUs</th>
               <th class="py-4 px-6">AVG (MS)</th>
@@ -354,43 +354,43 @@
           </thead>
           <tbody id="k6-tbody" class="text-[12px] font-mono">
             <tr class="zebra-row">
-              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_50</td>
+              <td class="py-3 px-6 text-[#6B5240] uppercase tracking-widest text-[10px]">load_50</td>
               <td class="py-3 px-6">50</td>
-              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
-              <td class="py-3 px-6 text-[#3fb950]">15</td>
+              <td class="py-3 px-6 text-[#DA7958]">8.5</td>
+              <td class="py-3 px-6 text-[#DA7958]">15</td>
               <td class="py-3 px-6">45</td>
-              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6 text-[#DA7958]">0.00%</td>
               <td class="py-3 px-6">~1109</td>
             </tr>
             <tr class="zebra-row">
-              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_100</td>
+              <td class="py-3 px-6 text-[#6B5240] uppercase tracking-widest text-[10px]">load_100</td>
               <td class="py-3 px-6">100</td>
-              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
-              <td class="py-3 px-6 text-[#3fb950]">15</td>
+              <td class="py-3 px-6 text-[#DA7958]">8.5</td>
+              <td class="py-3 px-6 text-[#DA7958]">15</td>
               <td class="py-3 px-6">45</td>
-              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6 text-[#DA7958]">0.00%</td>
               <td class="py-3 px-6">~1109</td>
             </tr>
             <tr class="zebra-row">
-              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_200</td>
+              <td class="py-3 px-6 text-[#6B5240] uppercase tracking-widest text-[10px]">load_200</td>
               <td class="py-3 px-6">200</td>
-              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
-              <td class="py-3 px-6 text-[#3fb950]">15</td>
+              <td class="py-3 px-6 text-[#DA7958]">8.5</td>
+              <td class="py-3 px-6 text-[#DA7958]">15</td>
               <td class="py-3 px-6">45</td>
-              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6 text-[#DA7958]">0.00%</td>
               <td class="py-3 px-6">~1109</td>
             </tr>
             <tr class="zebra-row">
-              <td class="py-3 px-6 text-[#8b949e] uppercase tracking-widest text-[10px]">load_500</td>
+              <td class="py-3 px-6 text-[#6B5240] uppercase tracking-widest text-[10px]">load_500</td>
               <td class="py-3 px-6">500</td>
-              <td class="py-3 px-6 text-[#3fb950]">8.5</td>
-              <td class="py-3 px-6 text-[#3fb950]">15.13</td>
+              <td class="py-3 px-6 text-[#DA7958]">8.5</td>
+              <td class="py-3 px-6 text-[#DA7958]">15.13</td>
               <td class="py-3 px-6">~45</td>
-              <td class="py-3 px-6 text-[#3fb950]">0.00%</td>
+              <td class="py-3 px-6 text-[#DA7958]">0.00%</td>
               <td class="py-3 px-6">~1109</td>
             </tr>
-            <tr style="background:#0d1117">
-              <td colspan="7" class="py-3 px-6 text-[10px] text-[#8b949e] uppercase tracking-widest">
+            <tr style="background:#F6F1EC">
+              <td colspan="7" class="py-3 px-6 text-[10px] text-[#6B5240] uppercase tracking-widest">
                 Toplam: 277.950 istek · 69.487 iterasyon · p95=15.13ms · Peak ~1109 RPS · %0.00 hata — k6 load-test.js
               </td>
             </tr>
@@ -401,58 +401,58 @@
 
     <!-- SECTION 5: SYSTEM INFO -->
     <section class="space-y-8" id="system">
-      <div class="flex items-end justify-between border-b border-[#30363d]/40 pb-4">
-        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#dfe2eb]">SYSTEM INFO</h2>
-        <span class="text-[10px] text-[#8b949e] uppercase tracking-widest">Host Environment</span>
+      <div class="flex items-end justify-between border-b border-[#C8B49A]/40 pb-4">
+        <h2 class="text-2xl font-extrabold tracking-tighter uppercase text-[#2A1A0E]">SYSTEM INFO</h2>
+        <span class="text-[10px] text-[#6B5240] uppercase tracking-widest">Host Environment</span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#30363d]/40 ghost-border">
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Container Runtime</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#C8B49A]/40 ghost-border">
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Container Runtime</span>
           <span class="font-mono text-sm">Docker + docker-compose</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Java Version</span>
-          <span class="font-mono text-sm text-[#3fb950]">OpenJDK 17 (Eclipse Temurin)</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Java Version</span>
+          <span class="font-mono text-sm text-[#DA7958]">OpenJDK 17 (Eclipse Temurin)</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Spring Boot</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Spring Boot</span>
           <span class="font-mono text-sm">3.2.5</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Spring Cloud</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Spring Cloud</span>
           <span class="font-mono text-sm">2023.0.1 (Gateway)</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Monitoring</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Monitoring</span>
           <span class="font-mono text-sm">Prometheus v2.51.2 + Grafana v10.4.2</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Auth</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Auth</span>
           <span class="font-mono text-sm">JWT (JJWT 0.12.5 · HS256)</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Database</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Database</span>
           <span class="font-mono text-sm">MongoDB 7.0 (x3) + Redis 7.2</span>
         </div>
-        <div class="bg-[#161b22] p-6 flex items-center justify-between">
-          <span class="text-[11px] font-bold text-[#8b949e] uppercase tracking-widest">Network</span>
-          <span class="font-mono text-sm text-[#d29922]">internal (isolated) + frontend</span>
+        <div class="bg-[#EDE8E2] p-6 flex items-center justify-between">
+          <span class="text-[11px] font-bold text-[#6B5240] uppercase tracking-widest">Network</span>
+          <span class="font-mono text-sm text-[#c99540]">internal (isolated) + frontend</span>
         </div>
       </div>
     </section>
 
   </div>
 
-  <footer class="p-6 border-t border-[#30363d]/40 flex justify-between items-center bg-[#0d1117]">
-    <div class="text-[10px] text-[#8b949e] font-bold uppercase tracking-widest">
+  <footer class="p-6 border-t border-[#C8B49A]/40 flex justify-between items-center bg-[#F6F1EC]">
+    <div class="text-[10px] text-[#6B5240] font-bold uppercase tracking-widest">
       Dispatcher Console © 2026 · YazLab II · KOU BSM
     </div>
     <div class="flex space-x-4">
       <div class="flex items-center space-x-2">
-        <span id="footer-dot" class="w-1.5 h-1.5 bg-[#8b949e] rounded-full"></span>
-        <span id="footer-status" class="text-[9px] text-[#8b949e] font-black uppercase">Connecting</span>
+        <span id="footer-dot" class="w-1.5 h-1.5 bg-[#6B5240] rounded-full"></span>
+        <span id="footer-status" class="text-[9px] text-[#6B5240] font-black uppercase">Connecting</span>
       </div>
-      <div class="text-[9px] text-[#8b949e] font-mono">YAZLAB-II-DISPATCHER</div>
+      <div class="text-[9px] text-[#6B5240] font-mono">YAZLAB-II-DISPATCHER</div>
     </div>
   </footer>
 </main>
@@ -476,21 +476,21 @@
   }
 
   function methodColor(m) {
-    if (m === 'GET') return '#3fb950';
-    if (m === 'DELETE') return '#f85149';
-    return '#d29922';
+    if (m === 'GET') return '#DA7958';
+    if (m === 'DELETE') return '#c45248';
+    return '#c99540';
   }
 
   function statusColor(s) {
-    if (s < 300) return '#3fb950';
-    if (s < 500) return '#d29922';
-    return '#f85149';
+    if (s < 300) return '#DA7958';
+    if (s < 500) return '#c99540';
+    return '#c45248';
   }
 
   function setServiceBadge(id, up) {
     const el = document.getElementById('svc-' + id);
     if (!el) return;
-    const color = up ? '#3fb950' : '#f85149';
+    const color = up ? '#DA7958' : '#c45248';
     const label = up ? 'UP' : 'DOWN';
     el.style.backgroundColor = color + '26';
     el.style.color = color;
@@ -523,7 +523,7 @@
       // Render table (newest first)
       const tbody = document.getElementById('log-tbody');
       if (logs.length === 0) {
-        tbody.innerHTML = '<tr class="zebra-row"><td colspan="6" class="py-8 px-6 text-center text-[#8b949e] font-mono">Henüz log yok.</td></tr>';
+        tbody.innerHTML = '<tr class="zebra-row"><td colspan="6" class="py-8 px-6 text-center text-[#6B5240] font-mono">Henüz log yok.</td></tr>';
         return;
       }
       tbody.innerHTML = [...logs].reverse().map(log => {
@@ -533,15 +533,15 @@
         return `<tr class="zebra-row">
           <td class="py-3 px-6 font-mono text-[11px]">${fmtTime(log.timestamp)}</td>
           <td class="py-3 px-6"><span style="color:${mc}" class="font-bold text-[11px]">${log.method}</span></td>
-          <td class="py-3 px-6 font-mono text-[#8b949e] text-[11px] max-w-xs truncate">${log.path}</td>
+          <td class="py-3 px-6 font-mono text-[#6B5240] text-[11px] max-w-xs truncate">${log.path}</td>
           <td class="py-3 px-6"><span style="color:${sc}" class="text-[11px]">${log.status}</span></td>
           <td class="py-3 px-6 font-mono text-[11px]">${log.latency}ms</td>
-          <td class="py-3 px-6 text-[#8b949e] text-[11px]">${svc}</td>
+          <td class="py-3 px-6 text-[#6B5240] text-[11px]">${svc}</td>
         </tr>`;
       }).join('');
     } catch (e) {
       const tbody = document.getElementById('log-tbody');
-      tbody.innerHTML = `<tr class="zebra-row"><td colspan="6" class="py-8 px-6 text-center text-[#f85149] font-mono">API bağlantısı kurulamadı: ${e.message}</td></tr>`;
+      tbody.innerHTML = `<tr class="zebra-row"><td colspan="6" class="py-8 px-6 text-center text-[#c45248] font-mono">API bağlantısı kurulamadı: ${e.message}</td></tr>`;
     }
   }
 
@@ -574,7 +574,7 @@
       // MongoDB: internal ağda, dispatcher+redis up ise çalışıyor kabul edilir
       const mongoEl = document.getElementById('svc-mongo');
       if (mongoEl) {
-        const mc = allUp ? '#3fb950' : '#f85149';
+        const mc = allUp ? '#DA7958' : '#c45248';
         const ml = allUp ? 'UP' : 'DOWN';
         mongoEl.style.backgroundColor = mc + '26';
         mongoEl.style.color = mc;
@@ -585,15 +585,15 @@
       document.getElementById('kpi-services').textContent = `0${upCount}/06`;
 
       // Header status
-      document.getElementById('status-dot').style.backgroundColor = dispUp ? '#3fb950' : '#f85149';
+      document.getElementById('status-dot').style.backgroundColor = dispUp ? '#DA7958' : '#c45248';
       document.getElementById('status-text').textContent = dispUp ? 'System: Operational' : 'System: Degraded';
-      document.getElementById('footer-dot').style.backgroundColor = '#3fb950';
+      document.getElementById('footer-dot').style.backgroundColor = '#DA7958';
       document.getElementById('footer-status').textContent = 'Connected';
     } catch (e) {
       setServiceBadge('dispatcher', false);
-      document.getElementById('status-dot').style.backgroundColor = '#f85149';
+      document.getElementById('status-dot').style.backgroundColor = '#c45248';
       document.getElementById('status-text').textContent = 'System: Unreachable';
-      document.getElementById('footer-dot').style.backgroundColor = '#f85149';
+      document.getElementById('footer-dot').style.backgroundColor = '#c45248';
       document.getElementById('footer-status').textContent = 'Disconnected';
       document.getElementById('kpi-services').textContent = '00/06';
     }
@@ -610,9 +610,9 @@
     if (bodyWrapper) bodyWrapper.style.display = (method === 'GET' || method === 'DELETE') ? 'none' : '';
     // Active state
     document.querySelectorAll('.endpoint-btn').forEach(b => {
-      b.classList.remove('border-l-2', 'border-[#3fb950]', 'bg-[#1c2026]');
+      b.classList.remove('border-l-2', 'border-[#DA7958]', 'bg-[#E8E2DB]');
     });
-    btn.classList.add('border-l-2', 'border-[#3fb950]', 'bg-[#1c2026]');
+    btn.classList.add('border-l-2', 'border-[#DA7958]', 'bg-[#E8E2DB]');
   }
 
   document.getElementById('exp-method').addEventListener('change', function() {
@@ -640,19 +640,19 @@
       const text = await res.text();
       let pretty = text;
       try { pretty = JSON.stringify(JSON.parse(text), null, 2); } catch {}
-      const color = res.status < 300 ? '#3fb950' : res.status < 500 ? '#d29922' : '#f85149';
+      const color = res.status < 300 ? '#DA7958' : res.status < 500 ? '#c99540' : '#c45248';
       respEl.innerHTML = `<span style="color:${color}">// ${res.status} ${res.statusText} (${latency}ms)</span>\n${pretty}`;
       // Login/register yanıtında token varsa otomatik doldur
       try {
         const parsed = JSON.parse(text);
         if (parsed.token) {
           document.getElementById('exp-token').value = parsed.token;
-          document.getElementById('exp-token').style.borderColor = '#3fb950';
+          document.getElementById('exp-token').style.borderColor = '#DA7958';
           setTimeout(() => document.getElementById('exp-token').style.borderColor = '', 2000);
         }
       } catch {}
     } catch (e) {
-      respEl.innerHTML = `<span style="color:#f85149">// Error: ${e.message}</span>`;
+      respEl.innerHTML = `<span style="color:#c45248">// Error: ${e.message}</span>`;
     }
   }
 
@@ -669,11 +669,11 @@
         const link = navLinks[s];
         if (!link) return;
         if (s === id) {
-          link.classList.add('text-[#3fb950]', 'border-l-2', 'border-[#3fb950]', 'bg-[#161b22]');
-          link.classList.remove('text-[#8b949e]', 'opacity-60');
+          link.classList.add('text-[#DA7958]', 'border-l-2', 'border-[#DA7958]', 'bg-[#EDE8E2]');
+          link.classList.remove('text-[#6B5240]', 'opacity-60');
         } else {
-          link.classList.remove('text-[#3fb950]', 'border-l-2', 'border-[#3fb950]', 'bg-[#161b22]');
-          link.classList.add('text-[#8b949e]', 'opacity-60');
+          link.classList.remove('text-[#DA7958]', 'border-l-2', 'border-[#DA7958]', 'bg-[#EDE8E2]');
+          link.classList.add('text-[#6B5240]', 'opacity-60');
         }
       });
     }
